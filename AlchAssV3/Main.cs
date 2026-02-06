@@ -55,6 +55,25 @@ namespace AlchAssV3
             Variable.KeyVortex = Config.Bind("快捷键", "选择目标漩涡", new KeyboardShortcut(KeyCode.LeftAlt));
             Variable.KeyCustom = Config.Bind("快捷键", "自定义方向线", new KeyboardShortcut(KeyCode.LeftShift));
 
+            Variable.KeyEnablePathLine = Config.Bind("可选快捷键", "开关路径方向线", new KeyboardShortcut(KeyCode.None));
+            Variable.KeyEnableLadleLine = Config.Bind("可选快捷键", "开关加水方向线", new KeyboardShortcut(KeyCode.None));
+            Variable.KeyEnableEffectLine = Config.Bind("可选快捷键", "开关效果径向线", new KeyboardShortcut(KeyCode.None));
+            Variable.KeyEnableVortexLine = Config.Bind("可选快捷键", "开关漩涡径向线", new KeyboardShortcut(KeyCode.None));
+            Variable.KeyEnableTangentLine = Config.Bind("可选快捷键", "开关漩涡切向线", new KeyboardShortcut(KeyCode.None));
+            Variable.KeyEnableCustomLine = Config.Bind("可选快捷键", "开关自定义方向线", new KeyboardShortcut(KeyCode.None));
+            Variable.KeyEnablePathCurve = Config.Bind("可选快捷键", "开关路径曲线", new KeyboardShortcut(KeyCode.None));
+            Variable.KeyEnableVortexCurve = Config.Bind("可选快捷键", "开关漩涡曲线", new KeyboardShortcut(KeyCode.None));
+            Variable.KeyEnableEffectRange = Config.Bind("可选快捷键", "开关效果范围", new KeyboardShortcut(KeyCode.None));
+            Variable.KeyEnableVortexRange = Config.Bind("可选快捷键", "开关漩涡范围", new KeyboardShortcut(KeyCode.None));
+            Variable.KeyEnableDangerSimulation = Config.Bind("可选快捷键", "开关危险点模拟", new KeyboardShortcut(KeyCode.None));
+            Variable.KeyEnableSwampSimulation = Config.Bind("可选快捷键", "开关沼泽模拟", new KeyboardShortcut(KeyCode.None));
+            Variable.KeyEnableTransparency = Config.Bind("可选快捷键", "开关透明药瓶", new KeyboardShortcut(KeyCode.None));
+
+            Variable.KeyToggleDisplaySalt = Config.Bind("可选快捷键", "开关显示盐量", new KeyboardShortcut(KeyCode.None));
+            Variable.KeyToggleDisplayStage = Config.Bind("可选快捷键", "开关显示阶段", new KeyboardShortcut(KeyCode.None));
+            Variable.KeyToggleDisplayOffset = Config.Bind("可选快捷键", "开关显示偏移", new KeyboardShortcut(KeyCode.None));
+            Variable.KeyToggleDisplayPolar = Config.Bind("可选快捷键", "开关显示极坐标", new KeyboardShortcut(KeyCode.None));
+
             Variable.LineWidth = Config.Bind("其他设置", "渲染线宽", 0.075f);
             Variable.NodeSize = Config.Bind("其他设置", "渲染点大小", 0.15f);
             Variable.WindowScale = Config.Bind("其他设置", "信息窗口缩放", 0.8f);
@@ -74,6 +93,8 @@ namespace AlchAssV3
         /// </summary>
         public void Update()
         {
+            Function.UpdateEnable();
+            Function.UpdateDoFromEnable(); // immediately update Derived Toggles
             Function.UpdateWindow();
             Function.UpdateSelectVortex();
             Function.UpdateCustomLines();

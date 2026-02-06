@@ -193,6 +193,47 @@ namespace AlchAssV3
 
         #region 功能开关
         /// <summary>
+        /// 从快捷键更新功能开关
+        /// </summary>
+        public static void UpdateEnable()
+        {
+            if (Variable.KeyEnablePathLine.Value.IsDown())
+                Variable.EnablePathLine = !Variable.EnablePathLine;
+            if (Variable.KeyEnableLadleLine.Value.IsDown())
+                Variable.EnableLadleLine = !Variable.EnableLadleLine;
+            if (Variable.KeyEnableEffectLine.Value.IsDown())
+                Variable.EnableEffectLine = !Variable.EnableEffectLine;
+            if (Variable.KeyEnableVortexLine.Value.IsDown())
+                Variable.EnableVortexLine = !Variable.EnableVortexLine;
+            if (Variable.KeyEnableTangentLine.Value.IsDown())
+                Variable.EnableTangentLine = !Variable.EnableTangentLine;
+            if (Variable.KeyEnableCustomLine.Value.IsDown())
+                Variable.EnableCustomLine = !Variable.EnableCustomLine;
+            if (Variable.KeyEnablePathCurve.Value.IsDown())
+                Variable.EnablePathCurve = !Variable.EnablePathCurve;
+            if (Variable.KeyEnableVortexCurve.Value.IsDown())
+                Variable.EnableVortexCurve = !Variable.EnableVortexCurve;
+            if (Variable.KeyEnableEffectRange.Value.IsDown())
+                Variable.EnableEffectRange = !Variable.EnableEffectRange;
+            if (Variable.KeyEnableVortexRange.Value.IsDown())
+                Variable.EnableVortexRange = !Variable.EnableVortexRange;
+            if (Variable.KeyEnableDangerSimulation.Value.IsDown())
+                Variable.EnableDangerSimulation = !Variable.EnableDangerSimulation;
+            if (Variable.KeyEnableSwampSimulation.Value.IsDown())
+                Variable.EnableSwampSimulation = !Variable.EnableSwampSimulation;
+            if (Variable.KeyEnableTransparency.Value.IsDown())
+                Variable.EnableTransparency = !Variable.EnableTransparency;
+            if (Variable.KeyToggleDisplaySalt.Value.IsDown())
+                Variable.DisplaySalt = !Variable.DisplaySalt;
+            if (Variable.KeyToggleDisplayStage.Value.IsDown())
+                Variable.DisplayStage = !Variable.DisplayStage;
+            if (Variable.KeyToggleDisplayOffset.Value.IsDown())
+                Variable.DisplayOffset = !Variable.DisplayOffset;
+            if (Variable.KeyToggleDisplayPolar.Value.IsDown())
+                Variable.DisplayPolar = !Variable.DisplayPolar;
+        }
+
+        /// <summary>
         /// 渲染元素开关
         /// </summary>
         public static void UpdateDoFromEnable()

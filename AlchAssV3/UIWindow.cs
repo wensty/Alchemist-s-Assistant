@@ -54,12 +54,16 @@ namespace AlchAssV3
             Variable.ToggleStyle.margin = new(30, 30, 6, 4);
             Variable.ToggleStyle.padding = new(25, 0, -1, 0);
 
-            Variable.LabelStyle = new(GUI.skin.label);
-            Variable.LabelStyle.font = Variable.Font;
-            Variable.LabelStyle.margin = new(30, 10, 5, 5);
+            Variable.LabelStyle = new(GUI.skin.label)
+            {
+                font = Variable.Font,
+                margin = new(30, 10, 5, 5)
+            };
 
-            Variable.SliderStyle = new(GUI.skin.horizontalSlider);
-            Variable.SliderStyle.margin = new(0, 5, 14, 0);
+            Variable.SliderStyle = new(GUI.skin.horizontalSlider)
+            {
+                margin = new(0, 5, 14, 0)
+            };
 
             Variable.TextFieldStyle = new(GUI.skin.textField);
             Variable.TextFieldStyle.normal.textColor = Color.green;

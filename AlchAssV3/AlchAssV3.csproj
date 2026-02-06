@@ -50,10 +50,10 @@
       <HintPath>$(PotionCraftPath)\Potion Craft_Data\Managed\Facepunch.Steamworks.Win64.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="mcs">
+    <!-- <Reference Include="mcs">
       <HintPath>$(PotionCraftPath)\Potion Craft_Data\Managed\mcs.dll</HintPath>
       <Private>False</Private>
-    </Reference>
+    </Reference> -->
     <Reference Include="Mono.Security">
       <HintPath>$(PotionCraftPath)\Potion Craft_Data\Managed\Mono.Security.dll</HintPath>
       <Private>False</Private>

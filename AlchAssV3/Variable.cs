@@ -43,7 +43,7 @@ namespace AlchAssV3
         #endregion
 
         #region 只读数据
-        public static readonly double VortexA = 1 / (2 * Math.PI);
+        public const double VortexA = 1 / (2 * Math.PI);
         public static readonly Font Font = Font.CreateDynamicFontFromOSFont("Microsoft YaHei", 16);
         public static readonly Dictionary<string, int> MapId = new() {
             { "Water", 0 }, { "Oil", 1 }, { "Wine", 2 } };
@@ -118,6 +118,20 @@ namespace AlchAssV3
         public static bool EnableSwampSimulation = false;
         public static bool EnableTransparency = false;
 
+        public static ConfigEntry<KeyboardShortcut> KeyEnablePathLine;
+        public static ConfigEntry<KeyboardShortcut> KeyEnableLadleLine;
+        public static ConfigEntry<KeyboardShortcut> KeyEnableEffectLine;
+        public static ConfigEntry<KeyboardShortcut> KeyEnableVortexLine;
+        public static ConfigEntry<KeyboardShortcut> KeyEnableTangentLine;
+        public static ConfigEntry<KeyboardShortcut> KeyEnableCustomLine;
+        public static ConfigEntry<KeyboardShortcut> KeyEnablePathCurve;
+        public static ConfigEntry<KeyboardShortcut> KeyEnableVortexCurve;
+        public static ConfigEntry<KeyboardShortcut> KeyEnableEffectRange;
+        public static ConfigEntry<KeyboardShortcut> KeyEnableVortexRange;
+        public static ConfigEntry<KeyboardShortcut> KeyEnableDangerSimulation;
+        public static ConfigEntry<KeyboardShortcut> KeyEnableSwampSimulation;
+        public static ConfigEntry<KeyboardShortcut> KeyEnableTransparency;
+
         public static bool DoCustomLine = false;
         public static bool DoPathCurve = false;
         public static bool DoVortexCurve = false;
@@ -139,6 +153,12 @@ namespace AlchAssV3
         public static bool DisplayStage = false;
         public static bool DisplayOffset = false;
         public static bool DisplayPolar = false;
+
+        public static ConfigEntry<KeyboardShortcut> KeyToggleDisplaySalt;
+        public static ConfigEntry<KeyboardShortcut> KeyToggleDisplayStage;
+        public static ConfigEntry<KeyboardShortcut> KeyToggleDisplayOffset;
+        public static ConfigEntry<KeyboardShortcut> KeyToggleDisplayPolar;
+
         #endregion
 
         #region 文件数据
