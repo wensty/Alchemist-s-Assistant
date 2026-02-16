@@ -1,4 +1,6 @@
-﻿using PotionCraft.LocalizationSystem;
+﻿using System;
+using BepInEx.Configuration;
+using PotionCraft.LocalizationSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -130,6 +132,22 @@ namespace AlchAssV3
 
         #region 元素渲染
         /// <summary>
+        /// 辅助函数：获取文本（快捷键或开关功能）
+        /// </summary>
+        /// <param name="textKey"></param>
+        /// <param name="shortcut"></param>
+        /// <returns></returns>
+        public static string GetLayoutTextString(string textKey, KeyboardShortcut shortcut)
+        {
+            if (Keyboard.current.backslashKey.ReadValue() == 1)
+            {
+                return shortcut.Serialize();
+            }
+            return LocalizationManager.GetText(textKey);
+            // return string.Format("{0}({1})", LocalizationManager.GetText(textKey), shortcut.Serialize());
+        }
+
+        /// <summary>
         /// 绘制功能选项
         /// </summary>
         public static void DrawEnables()
@@ -142,22 +160,22 @@ namespace AlchAssV3
             {
                 GUILayout.BeginHorizontal();
                 GUILayout.BeginVertical();
-                Variable.EnablePathLine = GUILayout.Toggle(Variable.EnablePathLine, LocalizationManager.GetText("路径切向线"), Variable.ToggleStyle);
-                Variable.EnableLadleLine = GUILayout.Toggle(Variable.EnableLadleLine, LocalizationManager.GetText("加水方向线"), Variable.ToggleStyle);
-                Variable.EnableEffectLine = GUILayout.Toggle(Variable.EnableEffectLine, LocalizationManager.GetText("效果径向线"), Variable.ToggleStyle);
-                Variable.EnableVortexLine = GUILayout.Toggle(Variable.EnableVortexLine, LocalizationManager.GetText("漩涡径向线"), Variable.ToggleStyle);
-                Variable.EnableTangentLine = GUILayout.Toggle(Variable.EnableTangentLine, LocalizationManager.GetText("漩涡切向线"), Variable.ToggleStyle);
-                Variable.EnableCustomLine = GUILayout.Toggle(Variable.EnableCustomLine, LocalizationManager.GetText("自定义方向线"), Variable.ToggleStyle);
-                Variable.EnablePathCurve = GUILayout.Toggle(Variable.EnablePathCurve, LocalizationManager.GetText("路径曲线"), Variable.ToggleStyle);
+                Variable.EnablePathLine = GUILayout.Toggle(Variable.EnablePathLine, GetLayoutTextString("路径切向线", Variable.KeyEnablePathLine.Value), Variable.ToggleStyle);
+                Variable.EnableLadleLine = GUILayout.Toggle(Variable.EnableLadleLine, GetLayoutTextString("加水方向线", Variable.KeyEnableLadleLine.Value), Variable.ToggleStyle);
+                Variable.EnableEffectLine = GUILayout.Toggle(Variable.EnableEffectLine, GetLayoutTextString("效果径向线", Variable.KeyEnableEffectLine.Value), Variable.ToggleStyle);
+                Variable.EnableVortexLine = GUILayout.Toggle(Variable.EnableVortexLine, GetLayoutTextString("漩涡径向线", Variable.KeyEnableVortexLine.Value), Variable.ToggleStyle);
+                Variable.EnableTangentLine = GUILayout.Toggle(Variable.EnableTangentLine, GetLayoutTextString("漩涡切向线", Variable.KeyEnableTangentLine.Value), Variable.ToggleStyle);
+                Variable.EnableCustomLine = GUILayout.Toggle(Variable.EnableCustomLine, GetLayoutTextString("自定义方向线", Variable.KeyEnableCustomLine.Value), Variable.ToggleStyle);
+                Variable.EnablePathCurve = GUILayout.Toggle(Variable.EnablePathCurve, GetLayoutTextString("路径曲线", Variable.KeyEnablePathCurve.Value), Variable.ToggleStyle);
                 GUILayout.EndVertical();
                 GUILayout.FlexibleSpace();
                 GUILayout.BeginVertical();
-                Variable.EnableVortexCurve = GUILayout.Toggle(Variable.EnableVortexCurve, LocalizationManager.GetText("漩涡曲线"), Variable.ToggleStyle);
-                Variable.EnableEffectRange = GUILayout.Toggle(Variable.EnableEffectRange, LocalizationManager.GetText("效果范围"), Variable.ToggleStyle);
-                Variable.EnableVortexRange = GUILayout.Toggle(Variable.EnableVortexRange, LocalizationManager.GetText("漩涡范围"), Variable.ToggleStyle);
-                Variable.EnableDangerSimulation = GUILayout.Toggle(Variable.EnableDangerSimulation, LocalizationManager.GetText("骷髅区模拟"), Variable.ToggleStyle);
-                Variable.EnableSwampSimulation = GUILayout.Toggle(Variable.EnableSwampSimulation, LocalizationManager.GetText("沼泽区模拟"), Variable.ToggleStyle);
-                Variable.EnableTransparency = GUILayout.Toggle(Variable.EnableTransparency, LocalizationManager.GetText("透明瓶身"), Variable.ToggleStyle);
+                Variable.EnableVortexCurve = GUILayout.Toggle(Variable.EnableVortexCurve, GetLayoutTextString("漩涡曲线", Variable.KeyEnableVortexCurve.Value), Variable.ToggleStyle);
+                Variable.EnableEffectRange = GUILayout.Toggle(Variable.EnableEffectRange, GetLayoutTextString("效果范围", Variable.KeyEnableEffectRange.Value), Variable.ToggleStyle);
+                Variable.EnableVortexRange = GUILayout.Toggle(Variable.EnableVortexRange, GetLayoutTextString("漩涡范围", Variable.KeyEnableVortexRange.Value), Variable.ToggleStyle);
+                Variable.EnableDangerSimulation = GUILayout.Toggle(Variable.EnableDangerSimulation, GetLayoutTextString("骷髅区模拟", Variable.KeyEnableDangerSimulation.Value), Variable.ToggleStyle);
+                Variable.EnableSwampSimulation = GUILayout.Toggle(Variable.EnableSwampSimulation, GetLayoutTextString("沼泽区模拟", Variable.KeyEnableSwampSimulation.Value), Variable.ToggleStyle);
+                Variable.EnableTransparency = GUILayout.Toggle(Variable.EnableTransparency, GetLayoutTextString("透明瓶身", Variable.KeyEnableTransparency.Value), Variable.ToggleStyle);
                 GUILayout.EndVertical();
                 GUILayout.EndHorizontal();
                 Function.UpdateDoFromEnable();
@@ -178,13 +196,13 @@ namespace AlchAssV3
             {
                 GUILayout.BeginHorizontal();
                 GUILayout.BeginVertical();
-                Variable.DisplaySalt = GUILayout.Toggle(Variable.DisplaySalt, LocalizationManager.GetText("盐量数据"), Variable.ToggleStyle);
-                Variable.DisplayStage = GUILayout.Toggle(Variable.DisplayStage, LocalizationManager.GetText("搅拌阶段"), Variable.ToggleStyle);
+                Variable.DisplaySalt = GUILayout.Toggle(Variable.DisplaySalt, GetLayoutTextString("盐量数据", Variable.KeyToggleDisplaySalt.Value), Variable.ToggleStyle);
+                Variable.DisplayStage = GUILayout.Toggle(Variable.DisplayStage, GetLayoutTextString("搅拌阶段", Variable.KeyToggleDisplayStage.Value), Variable.ToggleStyle);
                 GUILayout.EndVertical();
                 GUILayout.FlexibleSpace();
                 GUILayout.BeginVertical();
-                Variable.DisplayPolar = GUILayout.Toggle(Variable.DisplayPolar, LocalizationManager.GetText("极坐标"), Variable.ToggleStyle);
-                Variable.DisplayOffset = GUILayout.Toggle(Variable.DisplayOffset, LocalizationManager.GetText("碰撞体位置"), Variable.ToggleStyle);
+                Variable.DisplayPolar = GUILayout.Toggle(Variable.DisplayPolar, GetLayoutTextString("极坐标", Variable.KeyToggleDisplayPolar.Value), Variable.ToggleStyle);
+                Variable.OffsetCorrection = GUILayout.Toggle(Variable.OffsetCorrection, GetLayoutTextString("碰撞体修正", Variable.KeyToggleDisplayOffset.Value), Variable.ToggleStyle);
                 GUILayout.EndVertical();
                 GUILayout.EndHorizontal();
             }

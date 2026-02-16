@@ -114,9 +114,9 @@
     }
   },
   {
-    "key": "碰撞体位置",
+    "key": "碰撞体修正",
     "values": {
-      "en": "Collider Position"
+      "en": "Collider Correction"
     }
   },
   {

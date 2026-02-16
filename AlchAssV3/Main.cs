@@ -55,6 +55,7 @@ namespace AlchAssV3
             Variable.KeyVortex = Config.Bind("快捷键", "选择目标漩涡", new KeyboardShortcut(KeyCode.LeftAlt));
             Variable.KeyCustom = Config.Bind("快捷键", "自定义方向线", new KeyboardShortcut(KeyCode.LeftShift));
 
+            Variable.KeyShowShortcut = Config.Bind("可选快捷键", "显示快捷键", new KeyboardShortcut(KeyCode.Backslash));
             Variable.KeyEnablePathLine = Config.Bind("可选快捷键", "开关路径方向线", new KeyboardShortcut(KeyCode.None));
             Variable.KeyEnableLadleLine = Config.Bind("可选快捷键", "开关加水方向线", new KeyboardShortcut(KeyCode.None));
             Variable.KeyEnableEffectLine = Config.Bind("可选快捷键", "开关效果径向线", new KeyboardShortcut(KeyCode.None));

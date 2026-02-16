@@ -118,6 +118,7 @@ namespace AlchAssV3
         public static bool EnableSwampSimulation = false;
         public static bool EnableTransparency = false;
 
+        public static ConfigEntry<KeyboardShortcut> KeyShowShortcut;
         public static ConfigEntry<KeyboardShortcut> KeyEnablePathLine;
         public static ConfigEntry<KeyboardShortcut> KeyEnableLadleLine;
         public static ConfigEntry<KeyboardShortcut> KeyEnableEffectLine;
@@ -151,7 +152,7 @@ namespace AlchAssV3
 
         public static bool DisplaySalt = false;
         public static bool DisplayStage = false;
-        public static bool DisplayOffset = false;
+        public static bool OffsetCorrection = false;
         public static bool DisplayPolar = false;
 
         public static ConfigEntry<KeyboardShortcut> KeyToggleDisplaySalt;

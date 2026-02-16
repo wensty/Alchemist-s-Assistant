@@ -278,7 +278,7 @@ namespace AlchAssV3
         /// </summary>
         public static void UpdateOffset()
         {
-            if (Variable.DisplayOffset)
+            if (Variable.OffsetCorrection)
                 Variable.Offset = Managers.RecipeMap.indicator.thisTransform.localPosition;
             else
                 Variable.Offset = Vector3.zero;

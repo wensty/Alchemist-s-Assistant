@@ -228,7 +228,7 @@ namespace AlchAssV3
             if (Variable.KeyToggleDisplayStage.Value.IsDown())
                 Variable.DisplayStage = !Variable.DisplayStage;
             if (Variable.KeyToggleDisplayOffset.Value.IsDown())
-                Variable.DisplayOffset = !Variable.DisplayOffset;
+                Variable.OffsetCorrection = !Variable.OffsetCorrection;
             if (Variable.KeyToggleDisplayPolar.Value.IsDown())
                 Variable.DisplayPolar = !Variable.DisplayPolar;
         }
