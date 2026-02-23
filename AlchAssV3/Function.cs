@@ -55,7 +55,7 @@ namespace AlchAssV3
         public static void SetDebugWindowTitle()
         {
             for (var i = 0; i < Variable.DebugWindows.Length; i++)
-                Variable.DebugWindows[i]?.captionText.text = LocalizationManager.GetText($"{Variable.WindowTags[i]}信息");
+                Variable.DebugWindows[i]?.captionText.text = LocalizationManager.GetText($"{Variable.WindowTags[i]}");
         }
         #endregion
 
