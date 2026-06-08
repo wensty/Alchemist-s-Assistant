@@ -46,6 +46,7 @@ namespace AlchAssExV3
             var assembly = Assembly.GetExecutingAssembly();
             Localization.RegisterLocalization("AlchAssExV3.Locs.Label.json", assembly);
             Localization.RegisterLocalization("AlchAssExV3.Locs.Button.json", assembly);
+            Localization.RegisterLocalization("AlchAssExV3.Locs.Help.json", assembly);
         }
 
         /// <summary>
@@ -60,9 +61,9 @@ namespace AlchAssExV3
         public static void SetLabelWidth()
         {
             if (float.IsNaN(VariableEx.LabelWidthAutos))
-                VariableEx.LabelWidthAutos = Localization.GetLabelWidth(["效果偏离", "血量阈值", "搅拌长度", "研磨目标", "加热目标", "加水长度", "回正角度"], true);
+                VariableEx.LabelWidthAutos = Localization.GetLabelWidth(["label_ex_effect_deviation", "label_ex_health_threshold", "label_ex_stirring_length", "label_ex_grinding_target", "label_ex_heating_target", "label_ex_ladling_length", "label_ex_restoring_angle"], true);
             if (float.IsNaN(VariableEx.LabelWidthManuals))
-                VariableEx.LabelWidthManuals = Localization.GetLabelWidth(["搅拌速度", "加水速度", "研磨速度", "加热速度", "酿造倍率"], true);
+                VariableEx.LabelWidthManuals = Localization.GetLabelWidth(["label_ex_stirring_speed", "label_ex_ladling_speed", "label_ex_grinding_speed", "label_ex_heating_speed", "label_ex_brewing_multiplier"], true);
         }
         #endregion
 

@@ -1,73 +1,85 @@
 [
   {
-    "key": "效果偏离",
+    "key": "label_ex_effect_deviation",
     "values": {
+      "zh": "效果偏离",
       "en": "Effect Deviation"
     }
   },
   {
-    "key": "血量阈值",
+    "key": "label_ex_health_threshold",
     "values": {
+      "zh": "血量阈值",
       "en": "Health Threshold"
     }
   },
   {
-    "key": "搅拌长度",
+    "key": "label_ex_stirring_length",
     "values": {
+      "zh": "搅拌长度",
       "en": "Stirring Length"
     }
   },
   {
-    "key": "加水长度",
+    "key": "label_ex_ladling_length",
     "values": {
+      "zh": "加水长度",
       "en": "Ladling Length"
     }
   },
   {
-    "key": "回正角度",
+    "key": "label_ex_restoring_angle",
     "values": {
+      "zh": "回正角度",
       "en": "Restoring Angle"
     }
   },
   {
-    "key": "研磨目标",
+    "key": "label_ex_grinding_target",
     "values": {
+      "zh": "研磨目标",
       "en": "Grinding Target"
     }
   },
   {
-    "key": "加热目标",
+    "key": "label_ex_heating_target",
     "values": {
+      "zh": "加热目标",
       "en": "Heating Target"
     }
   },
   {
-    "key": "研磨速度",
+    "key": "label_ex_grinding_speed",
     "values": {
+      "zh": "研磨速度",
       "en": "Grinding Speed"
     }
   },
   {
-    "key": "加热速度",
+    "key": "label_ex_heating_speed",
     "values": {
+      "zh": "加热速度",
       "en": "Heating Speed"
     }
   },
   {
-    "key": "搅拌速度",
+    "key": "label_ex_stirring_speed",
     "values": {
+      "zh": "搅拌速度",
       "en": "Stirring Speed"
     }
   },
   {
-    "key": "加水速度",
+    "key": "label_ex_ladling_speed",
     "values": {
+      "zh": "加水速度",
       "en": "Ladling Speed"
     }
   },
   {
-    "key": "酿造倍率",
+    "key": "label_ex_brewing_multiplier",
     "values": {
+      "zh": "酿造倍率",
       "en": "Brewing Multiplier"
     }
   }

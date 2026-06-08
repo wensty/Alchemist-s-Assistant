@@ -165,7 +165,6 @@ namespace AlchAssV3
         public static void DrawWindow(int _)
         {
             ActiveHelpTooltip = string.Empty;
-            ApplyFontSizes();
             GUILayout.Space(8);
             Variable.ScrollPosition = GUILayout.BeginScrollView(Variable.ScrollPosition);
 
@@ -214,7 +213,7 @@ namespace AlchAssV3
             return texture;
         }
 
-        private static bool DrawHelpToggle(bool value, string textKey, KeyboardShortcut shortcut, string helpKey)
+        public static bool DrawHelpToggle(bool value, string textKey, KeyboardShortcut shortcut, string helpKey)
         {
             var text = GetLayoutTextString(textKey, shortcut);
 
@@ -235,7 +234,6 @@ namespace AlchAssV3
             if (string.IsNullOrEmpty(ActiveHelpTooltip))
                 return;
 
-            Variable.TooltipStyle.fontSize = Variable.HelpTooltipFontSize;
             var maxWidth = Mathf.Clamp(Variable.WindowRect.width - 60f, 180f, 520f);
             var content = new GUIContent(ActiveHelpTooltip);
             var height = Variable.TooltipStyle.CalcHeight(content, maxWidth);
@@ -255,7 +253,7 @@ namespace AlchAssV3
         /// <returns></returns>
         public static string GetLayoutTextString(string textKey, KeyboardShortcut shortcut)
         {
-            if (Keyboard.current.backslashKey.ReadValue() == 1)
+            if (!Function.IsGameInputFieldSelected() && Variable.KeyShowShortcut.Value.IsPressed())
             {
                 return shortcut.Serialize();
             }
@@ -342,26 +340,26 @@ namespace AlchAssV3
                 if (GUILayout.Button(LocalizationManager.GetText("button_save_window_layout"), Variable.ButtonStyle))
                     Function.SaveDebugWindowPos();
                 GUILayout.EndHorizontal();
+
                 DrawFontSizeSlider("label_ui_text_size", ref Variable.UIFontSize);
                 DrawFontSizeSlider("label_help_text_size", ref Variable.HelpTooltipFontSize);
+
+                if (GUILayout.Button(LocalizationManager.GetText("button_apply_text_size"), Variable.ButtonStyle))
+                    ApplyFontSizes();
             }
             GUILayout.Space(10);
         }
 
         private static void DrawFontSizeSlider(string labelKey, ref int value)
         {
-            var labelWidth = Mathf.Clamp(Variable.WindowRect.width * 0.36f, 120f, 220f);
-            var sliderWidth = Mathf.Max(100f, Variable.WindowRect.width - labelWidth - 90f);
+            var labelWidth = Mathf.Clamp(Variable.WindowRect.width * 0.34f, 96f, 180f);
 
             GUILayout.BeginHorizontal();
             GUILayout.Label($"{LocalizationManager.GetText(labelKey)}: {value}", Variable.LabelStyle, GUILayout.Width(labelWidth));
-            var sliderValue = GUILayout.HorizontalSlider(value, 10f, 30f, Variable.SliderStyle, new(GUI.skin.horizontalSliderThumb), GUILayout.Width(sliderWidth));
+            var sliderValue = GUILayout.HorizontalSlider(value, 10f, 30f, Variable.SliderStyle, new(GUI.skin.horizontalSliderThumb), GUILayout.MinWidth(40f), GUILayout.ExpandWidth(true));
             var newValue = Mathf.RoundToInt(sliderValue);
             if (newValue != value)
-            {
                 value = newValue;
-                ApplyFontSizes();
-            }
             GUILayout.EndHorizontal();
         }
 
@@ -388,10 +386,15 @@ namespace AlchAssV3
 
                 for (int i = 0; i < Variable.CustomLineDirections.Count; i++)
                 {
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label($"{i + 1}.", Variable.LabelStyle, GUILayout.Width(Variable.LabelWidth));
+                    var contentWidth = Mathf.Max(160f, Variable.WindowRect.width - 72f);
+                    var indexWidth = Mathf.Max(Variable.LabelWidth, 24f);
+                    var inputWidth = Mathf.Clamp(contentWidth * 0.2f, 48f, 88f);
+                    var deleteWidth = Mathf.Clamp(contentWidth * 0.16f, 44f, 76f);
 
-                    var slideValue = GUILayout.HorizontalSlider(Variable.CustomLineDirections[i], 0f, 360f, Variable.SliderStyle, new(GUI.skin.horizontalSliderThumb));
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label($"{i + 1}.", Variable.LabelStyle, GUILayout.Width(indexWidth));
+
+                    var slideValue = GUILayout.HorizontalSlider(Variable.CustomLineDirections[i], 0f, 360f, Variable.SliderStyle, new(GUI.skin.horizontalSliderThumb), GUILayout.MinWidth(40f), GUILayout.ExpandWidth(true));
                     if (slideValue != Variable.CustomLineDirections[i])
                     {
                         Variable.CustomLineDirections[i] = slideValue;
@@ -399,7 +402,7 @@ namespace AlchAssV3
                     }
 
                     var style = Variable.Inputs[i].Item2 ? Variable.TextFieldErrorStyle : Variable.TextFieldStyle;
-                    var inputValue = GUILayout.TextField(Variable.Inputs[i].Item1, style);
+                    var inputValue = GUILayout.TextField(Variable.Inputs[i].Item1, style, GUILayout.Width(inputWidth));
                     if (inputValue != Variable.Inputs[i].Item1)
                     {
                         if (float.TryParse(inputValue, out var parsedValue))
@@ -414,7 +417,7 @@ namespace AlchAssV3
                             Variable.Inputs[i] = (inputValue, true);
                     }
 
-                    if (GUILayout.Button(LocalizationManager.GetText("button_delete"), Variable.DeleteButtonStyle))
+                    if (GUILayout.Button(LocalizationManager.GetText("button_delete"), Variable.DeleteButtonStyle, GUILayout.Width(deleteWidth)))
                     {
                         Variable.CustomLineDirections.RemoveAt(i);
                         Variable.CustomLineHovers.RemoveAt(i);

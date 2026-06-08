@@ -1,145 +1,169 @@
 [
   {
-    "key": "基础控制选项",
+    "key": "button_ex_base_control_options",
     "values": {
+      "zh": "基础控制选项",
       "en": "Base Control Options"
     }
   },
   {
-    "key": "自动控制选项",
+    "key": "button_ex_auto_control_options",
     "values": {
+      "zh": "自动控制选项",
       "en": "Auto Control Options"
     }
   },
   {
-    "key": "自动控制配置",
+    "key": "button_ex_auto_control_configurations",
     "values": {
+      "zh": "自动控制配置",
       "en": "Auto Control Configurations"
     }
   },
   {
-    "key": "手动控制配置 1",
+    "key": "button_ex_manual_control_config_1",
     "values": {
+      "zh": "手动控制配置 1",
       "en": "Manual Control Configurations 1"
     }
   },
   {
-    "key": "手动控制配置 2",
+    "key": "button_ex_manual_control_config_2",
     "values": {
+      "zh": "手动控制配置 2",
       "en": "Manual Control Configurations 2"
     }
   },
   {
-    "key": "手动控制配置 3",
+    "key": "button_ex_manual_control_config_3",
     "values": {
+      "zh": "手动控制配置 3",
       "en": "Manual Control Configurations 3"
     }
   },
   {
-    "key": "定量加热",
+    "key": "button_ex_quantitative_heating",
     "values": {
+      "zh": "定量加热",
       "en": "Quantitative Heating"
     }
   },
   {
-    "key": "定量研磨",
+    "key": "button_ex_quantitative_grinding",
     "values": {
+      "zh": "定量研磨",
       "en": "Quantitative Grinding"
     }
   },
   {
-    "key": "慢速搅拌",
+    "key": "button_ex_slow_stirring",
     "values": {
+      "zh": "慢速搅拌",
       "en": "Slow Stirring"
     }
   },
   {
-    "key": "慢速加水",
+    "key": "button_ex_slow_ladling",
     "values": {
+      "zh": "慢速加水",
       "en": "Slow Ladling"
     }
   },
   {
-    "key": "慢速加热",
+    "key": "button_ex_slow_heating",
     "values": {
+      "zh": "慢速加热",
       "en": "Slow Heating"
     }
   },
   {
-    "key": "慢速研磨",
+    "key": "button_ex_slow_grinding",
     "values": {
+      "zh": "慢速研磨",
       "en": "Slow Grinding"
     }
   },
   {
-    "key": "大批量酿造",
+    "key": "button_ex_bulk_brewing",
     "values": {
+      "zh": "大批量酿造",
       "en": "Bulk Brewing"
     }
   },
   {
-    "key": "定量搅拌",
+    "key": "button_ex_quantitative_stirring",
     "values": {
+      "zh": "定量搅拌",
       "en": "Quantitative Stirring"
     }
   },
   {
-    "key": "定量加水",
+    "key": "button_ex_quantitative_ladling",
     "values": {
+      "zh": "定量加水",
       "en": "Quantitative Ladling"
     }
   },
   {
-    "key": "定量回正",
+    "key": "button_ex_quantitative_restoring",
     "values": {
+      "zh": "定量回正",
       "en": "Quantitative Restoring"
     }
   },
   {
-    "key": "效果交会点",
+    "key": "button_ex_effect_intersection",
     "values": {
+      "zh": "效果交会点",
       "en": "Effect Intersection"
     }
   },
   {
-    "key": "效果临界点",
+    "key": "button_ex_effect_alignment",
     "values": {
+      "zh": "效果临界点",
       "en": "Effect Alignment"
     }
   },
   {
-    "key": "骷髅交会点",
+    "key": "button_ex_danger_intersection",
     "values": {
+      "zh": "骷髅交会点",
       "en": "Danger Intersection"
     }
   },
   {
-    "key": "骷髅临界点",
+    "key": "button_ex_danger_alignment",
     "values": {
+      "zh": "骷髅临界点",
       "en": "Danger Alignment"
     }
   },
   {
-    "key": "沼泽交会点",
+    "key": "button_ex_swamp_intersection",
     "values": {
+      "zh": "沼泽交会点",
       "en": "Swamp Intersection"
     }
   },
   {
-    "key": "沼泽临界点",
+    "key": "button_ex_swamp_alignment",
     "values": {
+      "zh": "沼泽临界点",
       "en": "Swamp Alignment"
     }
   },
   {
-    "key": "漩涡交会点",
+    "key": "button_ex_vortex_intersection",
     "values": {
+      "zh": "漩涡交会点",
       "en": "Vortex Intersection"
     }
   },
   {
-    "key": "漩涡临界点",
+    "key": "button_ex_vortex_alignment",
     "values": {
+      "zh": "漩涡临界点",
       "en": "Vortex Alignment"
     }
   }

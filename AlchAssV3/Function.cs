@@ -1,4 +1,5 @@
 ﻿using PotionCraft.DebugObjects.DebugWindows;
+using PotionCraft.InputSystem;
 using PotionCraft.LocalizationSystem;
 using PotionCraft.ManagersSystem;
 using PotionCraft.ObjectBased;
@@ -63,10 +64,21 @@ namespace AlchAssV3
 
         #region 快捷键功能
         /// <summary>
+        /// 游戏输入框选中时，避免模组快捷键和文本输入互相干扰。
+        /// </summary>
+        public static bool IsGameInputFieldSelected()
+        {
+            return Command.IsInputFieldSelected;
+        }
+
+        /// <summary>
         /// 控制面板开关
         /// </summary>
         public static void UpdateWindow()
         {
+            if (IsGameInputFieldSelected())
+                return;
+
             if (Variable.KeyWindow.Value.IsDown())
                 Variable.ShowWindow = !Variable.ShowWindow;
             if (Variable.ShowWindow)
@@ -81,6 +93,9 @@ namespace AlchAssV3
         /// </summary>
         public static void UpdateSelectEffect(InteractiveItem item)
         {
+            if (IsGameInputFieldSelected())
+                return;
+
             if (Variable.KeyEffect.Value.IsPressed() && Mouse.current.rightButton.wasPressedThisFrame)
             {
                 var name = item.name;
@@ -95,6 +110,9 @@ namespace AlchAssV3
         /// </summary>
         public static void UpdateSelectVortex()
         {
+            if (IsGameInputFieldSelected())
+                return;
+
             if (Managers.RecipeMap?.currentMap == null || Managers.RecipeMap.currentMap.potionBase.name == "Wine")
                 return;
 
@@ -127,6 +145,12 @@ namespace AlchAssV3
         /// </summary>
         public static void UpdateCustomLines()
         {
+            if (IsGameInputFieldSelected())
+            {
+                Variable.TargetLineIndex = -1;
+                return;
+            }
+
             if (Variable.KeyCustom.Value.IsPressed() && Variable.DoCustomLine)
             {
                 var mousePos = Managers.Cursor.cursor.transform.position;
@@ -199,6 +223,9 @@ namespace AlchAssV3
         /// </summary>
         public static void UpdateEnable()
         {
+            if (IsGameInputFieldSelected())
+                return;
+
             if (Variable.KeyEnablePathLine.Value.IsDown())
                 Variable.EnablePathLine = !Variable.EnablePathLine;
             if (Variable.KeyEnableLadleLine.Value.IsDown())

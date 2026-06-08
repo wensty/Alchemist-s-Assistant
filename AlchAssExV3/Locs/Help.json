@@ -1,0 +1,128 @@
+[
+  {
+    "key": "help_ex_slow_stirring",
+    "values": {
+      "zh": "按当前手动控制配置或自动控制结果降低搅拌速度。手动配置由当前按住的手动控制快捷键决定，自动制动依赖主模组计算出的目标、路径、范围和危险信息。",
+      "en": "Reduces stirring speed using the active manual control profile and automatic control result. The manual profile is selected by the held manual shortcut; automatic braking depends on target, path, range, and danger data calculated by the main mod."
+    }
+  },
+  {
+    "key": "help_ex_slow_ladling",
+    "values": {
+      "zh": "按当前手动控制配置或自动控制结果降低加水速度。自动控制会使用主模组计算出的当前位置、目标效果、漩涡、危险区和沼泽相关数据。",
+      "en": "Reduces ladling speed using the active manual control profile and automatic control result. Automatic control uses the current position, target effect, vortex, danger-zone, and swamp data calculated by the main mod."
+    }
+  },
+  {
+    "key": "help_ex_slow_grinding",
+    "values": {
+      "zh": "按当前手动控制配置降低研磨速度，便于接近指定研磨进度。",
+      "en": "Reduces grinding speed using the active manual control profile, making it easier to approach the target grind progress."
+    }
+  },
+  {
+    "key": "help_ex_slow_heating",
+    "values": {
+      "zh": "按当前手动控制配置或自动控制结果降低漩涡加热移动速度。自动控制依赖主模组的漩涡、目标效果和危险区计算。",
+      "en": "Reduces vortex heating movement speed using the active manual profile and automatic control result. Automatic control depends on vortex, target effect, and danger-zone calculations from the main mod."
+    }
+  },
+  {
+    "key": "help_ex_bulk_brewing",
+    "values": {
+      "zh": "批量酿造配方时按当前手动配置的酿造倍率增加数量；会先检查材料是否足够。",
+      "en": "When brewing a recipe in batches, multiplies the brew count by the active manual profile's brewing multiplier after checking that enough ingredients are available."
+    }
+  },
+  {
+    "key": "help_ex_quantitative_stirring",
+    "values": {
+      "zh": "自动按“搅拌长度”剩余值制动搅拌速度，剩余长度会随主模组读取到的搅拌进度减少。",
+      "en": "Automatically brakes stirring based on the remaining Stirring Length. The remaining length decreases according to stirring progress read by the main mod."
+    }
+  },
+  {
+    "key": "help_ex_quantitative_ladling",
+    "values": {
+      "zh": "自动按“加水长度”剩余值制动加水速度，剩余长度会随加水造成的药瓶回移距离减少。",
+      "en": "Automatically brakes ladling based on the remaining Ladling Length. The remaining length decreases as ladling moves the potion back toward the base."
+    }
+  },
+  {
+    "key": "help_ex_quantitative_restoring",
+    "values": {
+      "zh": "自动按“回正角度”剩余值制动加水速度，用于控制加水时药瓶旋转回正的角度。",
+      "en": "Automatically brakes ladling based on the remaining Restoring Angle, controlling how much rotation is restored while adding water."
+    }
+  },
+  {
+    "key": "help_ex_quantitative_grinding",
+    "values": {
+      "zh": "右键研杵时直接把当前材料研磨进度设置为“研磨目标”。",
+      "en": "Right-clicking the pestle sets the current ingredient grind progress directly to the Grinding Target."
+    }
+  },
+  {
+    "key": "help_ex_quantitative_heating",
+    "values": {
+      "zh": "右键风箱时直接把当前加热进度设置为“加热目标”。",
+      "en": "Right-clicking the bellows sets the current heating progress directly to the Heating Target."
+    }
+  },
+  {
+    "key": "help_ex_effect_intersection",
+    "values": {
+      "zh": "根据主模组选中的目标效果和“效果偏离”阈值，在当前药瓶接近效果判定范围时自动制动。",
+      "en": "Uses the target effect selected by the main mod and the Effect Deviation threshold to brake as the current potion approaches the effect range."
+    }
+  },
+  {
+    "key": "help_ex_effect_alignment",
+    "values": {
+      "zh": "根据主模组计算出的路径/加水方向与目标效果最近点，在即将达到“效果偏离”阈值时自动制动搅拌、加水或加热。",
+      "en": "Uses the closest path/ladle points to the target effect calculated by the main mod to brake stirring, ladling, or heating near the Effect Deviation threshold."
+    }
+  },
+  {
+    "key": "help_ex_vortex_intersection",
+    "values": {
+      "zh": "根据主模组选中的目标漩涡，在当前药瓶接近漩涡范围时自动制动。需要先在主模组中选择目标漩涡。",
+      "en": "Uses the target vortex selected by the main mod to brake as the current potion approaches the vortex range. A target vortex must be selected in the main mod first."
+    }
+  },
+  {
+    "key": "help_ex_vortex_alignment",
+    "values": {
+      "zh": "根据主模组计算出的路径/加水方向与目标漩涡最近点，在即将接触漩涡范围时自动制动。",
+      "en": "Uses the closest path/ladle points to the target vortex calculated by the main mod to brake as the route approaches the vortex range."
+    }
+  },
+  {
+    "key": "help_ex_danger_intersection",
+    "values": {
+      "zh": "根据主模组模拟出的危险区交会点，在当前药瓶接近骷髅区时自动制动。需要主模组启用对应危险点模拟。",
+      "en": "Uses danger-zone intersections simulated by the main mod to brake as the current potion approaches skull zones. The corresponding danger simulation must be enabled in the main mod."
+    }
+  },
+  {
+    "key": "help_ex_danger_alignment",
+    "values": {
+      "zh": "根据主模组计算出的路径、加水或漩涡危险距离，以及“血量阈值”，在即将越过安全边界时自动制动。",
+      "en": "Uses path, ladle, or vortex danger distance calculated by the main mod plus the Health Threshold to brake near the safety boundary."
+    }
+  },
+  {
+    "key": "help_ex_swamp_intersection",
+    "values": {
+      "zh": "根据主模组模拟出的沼泽交会点，在当前药瓶接近沼泽区时自动制动。需要主模组启用沼泽区模拟。",
+      "en": "Uses swamp intersections simulated by the main mod to brake as the current potion approaches swamp zones. Swamp simulation must be enabled in the main mod."
+    }
+  },
+  {
+    "key": "help_ex_swamp_alignment",
+    "values": {
+      "zh": "根据主模组计算出的路径到沼泽区距离，在即将接触沼泽时自动制动加水或加热。",
+      "en": "Uses the path-to-swamp distance calculated by the main mod to brake ladling or heating as the route approaches swamp zones."
+    }
+  }
+]

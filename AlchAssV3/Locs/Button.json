@@ -161,6 +161,13 @@
     }
   },
   {
+    "key": "button_apply_text_size",
+    "values": {
+      "zh": "应用文本点数",
+      "en": "Apply Text Size"
+    }
+  },
+  {
     "key": "button_add_lines",
     "values": {
       "zh": "添加方向线",
