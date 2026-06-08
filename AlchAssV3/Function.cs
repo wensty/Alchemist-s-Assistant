@@ -50,6 +50,8 @@ namespace AlchAssV3
             for (var i = 0; i < Variable.DebugWindows.Length; i++)
                 Variable.WindowPositions[i].Value = Variable.DebugWindows[i].transform.localPosition;
             Variable.WindowRectConfig.Value = Variable.WindowRect;
+            Variable.UIFontSizeConfig.Value = Variable.UIFontSize;
+            Variable.HelpTooltipFontSizeConfig.Value = Variable.HelpTooltipFontSize;
         }
 
         public static void SetDebugWindowTitle()
@@ -399,7 +401,7 @@ namespace AlchAssV3
         public static void FormatLocalization()
         {
             var assembly = Assembly.GetExecutingAssembly();
-            string[] tags = ["Label", "Title", "Button"];
+            string[] tags = ["Label", "Title", "Button", "Help"];
             foreach (var tag in tags)
                 Localization.RegisterLocalization($"AlchAssV3.Locs.{tag}.json", assembly);
         }

@@ -18,12 +18,12 @@ namespace AlchAssV3
         /// </summary>
         public static string CalculatePath()
         {
-            string devTotText = LocalizationManager.GetText("不可用");
-            string devPosText = LocalizationManager.GetText("不可用");
-            string closestDirText = LocalizationManager.GetText("不可用");
-            string deltaAngleText = LocalizationManager.GetText("不可用");
-            string lifeSaltText = LocalizationManager.GetText("不可用");
-            string swampDisText = LocalizationManager.GetText("不可用");
+            string devTotText = LocalizationManager.GetText("label_unavailable");
+            string devPosText = LocalizationManager.GetText("label_unavailable");
+            string closestDirText = LocalizationManager.GetText("label_unavailable");
+            string deltaAngleText = LocalizationManager.GetText("label_unavailable");
+            string lifeSaltText = LocalizationManager.GetText("label_unavailable");
+            string swampDisText = LocalizationManager.GetText("label_unavailable");
 
             if (!float.IsNaN(Variable.ClosestPositions[0].x))
             {
@@ -52,12 +52,12 @@ namespace AlchAssV3
             if (!double.IsNaN(Variable.DistanceSwamp))
                 swampDisText = $"{(float)Variable.DistanceSwamp}";
             return $"""
-                {LocalizationManager.GetText("总体偏离")}: {devTotText}
-                {LocalizationManager.GetText("位置偏离")}: {devPosText}
-                {LocalizationManager.GetText("近点方向")}: {closestDirText}
-                {LocalizationManager.GetText("效果夹角")}: {deltaAngleText}
-                {LocalizationManager.GetText("加血需求")}: {lifeSaltText}
-                {LocalizationManager.GetText("沼泽长度")}: {swampDisText}
+                {LocalizationManager.GetText("label_total_deviation")}: {devTotText}
+                {LocalizationManager.GetText("label_position_deviation")}: {devPosText}
+                {LocalizationManager.GetText("label_proximity_direction")}: {closestDirText}
+                {LocalizationManager.GetText("label_effect_angle")}: {deltaAngleText}
+                {LocalizationManager.GetText("label_healing_requirement")}: {lifeSaltText}
+                {LocalizationManager.GetText("label_swamp_length")}: {swampDisText}
                 """;
         }
 
@@ -66,11 +66,11 @@ namespace AlchAssV3
         /// </summary>
         public static string CalculateLadle()
         {
-            string devTotText = LocalizationManager.GetText("不可用");
-            string devPosText = LocalizationManager.GetText("不可用");
-            string closestDirText = LocalizationManager.GetText("不可用");
-            string deltaAngleText = LocalizationManager.GetText("不可用");
-            string lifeSaltText = LocalizationManager.GetText("不可用");
+            string devTotText = LocalizationManager.GetText("label_unavailable");
+            string devPosText = LocalizationManager.GetText("label_unavailable");
+            string closestDirText = LocalizationManager.GetText("label_unavailable");
+            string deltaAngleText = LocalizationManager.GetText("label_unavailable");
+            string lifeSaltText = LocalizationManager.GetText("label_unavailable");
 
             if (!float.IsNaN(Variable.ClosestPositions[2].x))
             {
@@ -97,11 +97,11 @@ namespace AlchAssV3
             if (!double.IsNaN(Variable.DangerDistanceLadle))
                 lifeSaltText = Function.FormatLifeSalt(Variable.DangerDistanceLadle);
             return $"""
-                {LocalizationManager.GetText("总体偏离")}: {devTotText}
-                {LocalizationManager.GetText("位置偏离")}: {devPosText}
-                {LocalizationManager.GetText("近点方向")}: {closestDirText}
-                {LocalizationManager.GetText("效果夹角")}: {deltaAngleText}
-                {LocalizationManager.GetText("加血需求")}: {lifeSaltText}
+                {LocalizationManager.GetText("label_total_deviation")}: {devTotText}
+                {LocalizationManager.GetText("label_position_deviation")}: {devPosText}
+                {LocalizationManager.GetText("label_proximity_direction")}: {closestDirText}
+                {LocalizationManager.GetText("label_effect_angle")}: {deltaAngleText}
+                {LocalizationManager.GetText("label_healing_requirement")}: {lifeSaltText}
                 """;
         }
 
@@ -112,9 +112,9 @@ namespace AlchAssV3
         {
             var phase = Managers.RecipeMap.path.deletedGraphicsSegments;
             var progress = Managers.RecipeMap.path.segmentLengthToDeletePhysics;
-            var pathDir = double.IsNaN(Variable.LineDirections[0]) ? LocalizationManager.GetText("不可用") : $"{(float)Variable.LineDirections[0]}°";
-            var ladleDir = double.IsNaN(Variable.LineDirections[1]) ? LocalizationManager.GetText("不可用") : $"{(float)Variable.LineDirections[1]}°";
-            var vortexText = LocalizationManager.GetText("不可用");
+            var pathDir = double.IsNaN(Variable.LineDirections[0]) ? LocalizationManager.GetText("label_unavailable") : $"{(float)Variable.LineDirections[0]}°";
+            var ladleDir = double.IsNaN(Variable.LineDirections[1]) ? LocalizationManager.GetText("label_unavailable") : $"{(float)Variable.LineDirections[1]}°";
+            var vortexText = LocalizationManager.GetText("label_unavailable");
             if (Managers.RecipeMap.CurrentVortexMapItem != null)
             {
                 var p = Managers.RecipeMap.CurrentVortexMapItem.thisTransform.localPosition - Variable.Offset;
@@ -126,17 +126,17 @@ namespace AlchAssV3
             }
             if (Variable.DisplayStage)
                 return $"""
-                {LocalizationManager.GetText("搅拌阶段")}: {phase}
-                {LocalizationManager.GetText("阶段进度")}: {progress}
-                {LocalizationManager.GetText("路径方向")}: {pathDir}
-                {LocalizationManager.GetText("加水方向")}: {ladleDir}
-                {LocalizationManager.GetText("漩涡切角")}: {vortexText}
+                {LocalizationManager.GetText("label_stir_phase")}: {phase}
+                {LocalizationManager.GetText("label_phase_progress")}: {progress}
+                {LocalizationManager.GetText("label_path_direction")}: {pathDir}
+                {LocalizationManager.GetText("label_ladle_direction")}: {ladleDir}
+                {LocalizationManager.GetText("label_vortex_tangency")}: {vortexText}
                 """;
             return $"""
-                {LocalizationManager.GetText("搅拌进度")}: {phase + progress}
-                {LocalizationManager.GetText("路径方向")}: {pathDir}
-                {LocalizationManager.GetText("加水方向")}: {ladleDir}
-                {LocalizationManager.GetText("漩涡切角")}: {vortexText}
+                {LocalizationManager.GetText("label_stir_progress")}: {phase + progress}
+                {LocalizationManager.GetText("label_path_direction")}: {pathDir}
+                {LocalizationManager.GetText("label_ladle_direction")}: {ladleDir}
+                {LocalizationManager.GetText("label_vortex_tangency")}: {vortexText}
                 """;
         }
 
@@ -153,12 +153,12 @@ namespace AlchAssV3
             var targetRot = Mathf.DeltaAngle(Variable.TargetEffect.transform.localEulerAngles.z, 0f) / 9f * 25f;
             var posText = Function.FormatPosition(targetPos);
             var rotText = Function.FormatMoonSalt(targetRot);
-            var dirText = double.IsNaN(Variable.LineDirections[2]) ? LocalizationManager.GetText("不可用") : $"{(float)Variable.LineDirections[2]}°";
+            var dirText = double.IsNaN(Variable.LineDirections[2]) ? LocalizationManager.GetText("label_unavailable") : $"{(float)Variable.LineDirections[2]}°";
             return $"""
-                {LocalizationManager.GetText("目标效果")}: {targetId}
-                {LocalizationManager.GetText("坐标位置")}: {posText}
-                {LocalizationManager.GetText("旋转角度")}: {rotText}
-                {LocalizationManager.GetText("效果方向")}: {dirText}
+                {LocalizationManager.GetText("label_target_effect")}: {targetId}
+                {LocalizationManager.GetText("label_position")}: {posText}
+                {LocalizationManager.GetText("label_rotation")}: {rotText}
+                {LocalizationManager.GetText("label_effect_direction")}: {dirText}
                 """;
         }
 
@@ -174,10 +174,10 @@ namespace AlchAssV3
             var offText = Function.FormatPosition(offPos);
             var rotText = Function.FormatMoonSalt(indRot);
             return $"""
-                {LocalizationManager.GetText("坐标位置")}: {posText}
-                {LocalizationManager.GetText("碰撞偏移")}: {offText}
-                {LocalizationManager.GetText("旋转角度")}: {rotText}
-                {LocalizationManager.GetText("当前血量")}: {health * 100f}%
+                {LocalizationManager.GetText("label_position")}: {posText}
+                {LocalizationManager.GetText("label_offset")}: {offText}
+                {LocalizationManager.GetText("label_rotation")}: {rotText}
+                {LocalizationManager.GetText("label_health")}: {health * 100f}%
                 """;
         }
 
@@ -202,9 +202,9 @@ namespace AlchAssV3
             var lvlRot = devRot <= 100f ? 3 : devRot <= 600f ? 2 : 1;
             var lvlTot = devTot <= 100f ? 3 : devTot <= 600f ? 2 : devPos <= 2754f ? 1 : 0;
             return $"""
-                {LocalizationManager.GetText("总体偏离")}: <color=red>L{lvlTot}</color> {devTot}%
-                {LocalizationManager.GetText("位置偏离")}: <color=red>L{lvlPos}</color> {devPos}%
-                {LocalizationManager.GetText("旋转偏离")}: <color=red>L{lvlRot}</color> {devRot}%
+                {LocalizationManager.GetText("label_total_deviation")}: <color=red>L{lvlTot}</color> {devTot}%
+                {LocalizationManager.GetText("label_position_deviation")}: <color=red>L{lvlPos}</color> {devPos}%
+                {LocalizationManager.GetText("label_rotation_deviation")}: <color=red>L{lvlRot}</color> {devRot}%
                 """;
         }
 
@@ -222,14 +222,14 @@ namespace AlchAssV3
             var disText = $"{Vector2.Distance(vortexPos, indPos)}";
             var maxText = $"{((CircleCollider2D)Traverse.Create(Managers.RecipeMap.CurrentVortexMapItem).Field("vortexCollider").GetValue()).radius + 0.74f}";
             var dirText = $"{Vector2.SignedAngle(Vector2.right, vortexPos - indPos)}°";
-            var tanText = double.IsNaN(Variable.LineDirections[4]) ? LocalizationManager.GetText("不可用") : $"{(float)Variable.LineDirections[4]}°";
-            var lfsText = double.IsNaN(Variable.DangerDistanceVortex) ? LocalizationManager.GetText("不可用") : Function.FormatLifeSalt(Variable.DangerDistanceVortex);
+            var tanText = double.IsNaN(Variable.LineDirections[4]) ? LocalizationManager.GetText("label_unavailable") : $"{(float)Variable.LineDirections[4]}°";
+            var lfsText = double.IsNaN(Variable.DangerDistanceVortex) ? LocalizationManager.GetText("label_unavailable") : Function.FormatLifeSalt(Variable.DangerDistanceVortex);
             return $"""
-                {LocalizationManager.GetText("漩涡距离")}: {disText}
-                {LocalizationManager.GetText("最大距离")}: {maxText}
-                {LocalizationManager.GetText("漩涡方向")}: {dirText}
-                {LocalizationManager.GetText("漩涡切向")}: {tanText}
-                {LocalizationManager.GetText("加血需求")}: {lfsText}
+                {LocalizationManager.GetText("label_vortex_distance")}: {disText}
+                {LocalizationManager.GetText("label_maximum_distance")}: {maxText}
+                {LocalizationManager.GetText("label_vortex_direction")}: {dirText}
+                {LocalizationManager.GetText("label_vortex_tangent")}: {tanText}
+                {LocalizationManager.GetText("label_healing_requirement")}: {lfsText}
                 """;
         }
 
@@ -248,15 +248,15 @@ namespace AlchAssV3
 
             var disText = $"{Vector2.Distance(vortexPos, indPos)}";
             var maxText = $"{(float)selVortex.r}";
-            var dirText = double.IsNaN(Variable.LineDirections[3]) ? LocalizationManager.GetText("不可用") : $"{(float)Variable.LineDirections[3]}°";
-            var strText = float.IsNaN(Variable.ClosestPositions[1].x) ? LocalizationManager.GetText("不可用") : $"{Vector2.Distance(vortexPos, Variable.ClosestPositions[1])}";
-            var ldlText = float.IsNaN(Variable.ClosestPositions[3].x) ? LocalizationManager.GetText("不可用") : $"{Vector2.Distance(vortexPos, Variable.ClosestPositions[3])}";
+            var dirText = double.IsNaN(Variable.LineDirections[3]) ? LocalizationManager.GetText("label_unavailable") : $"{(float)Variable.LineDirections[3]}°";
+            var strText = float.IsNaN(Variable.ClosestPositions[1].x) ? LocalizationManager.GetText("label_unavailable") : $"{Vector2.Distance(vortexPos, Variable.ClosestPositions[1])}";
+            var ldlText = float.IsNaN(Variable.ClosestPositions[3].x) ? LocalizationManager.GetText("label_unavailable") : $"{Vector2.Distance(vortexPos, Variable.ClosestPositions[3])}";
             return $"""
-                {LocalizationManager.GetText("漩涡距离")}: {disText}
-                {LocalizationManager.GetText("路径近点")}: {strText}
-                {LocalizationManager.GetText("加水近点")}: {ldlText}
-                {LocalizationManager.GetText("最大距离")}: {maxText}
-                {LocalizationManager.GetText("漩涡方向")}: {dirText}
+                {LocalizationManager.GetText("label_vortex_distance")}: {disText}
+                {LocalizationManager.GetText("label_path_proximity")}: {strText}
+                {LocalizationManager.GetText("label_ladle_proximity")}: {ldlText}
+                {LocalizationManager.GetText("label_maximum_distance")}: {maxText}
+                {LocalizationManager.GetText("label_vortex_direction")}: {dirText}
                 """;
         }
 
@@ -267,7 +267,7 @@ namespace AlchAssV3
         {
             if (mortar.ContainedStack == null)
                 return "";
-            return $"{LocalizationManager.GetText("研磨进度")}: {mortar.ContainedStack.overallGrindStatus * 100f}%";
+            return $"{LocalizationManager.GetText("label_grind_progress")}: {mortar.ContainedStack.overallGrindStatus * 100f}%";
         }
         #endregion
 

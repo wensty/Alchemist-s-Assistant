@@ -23,6 +23,8 @@ namespace AlchAssV3
         public static ConfigEntry<float> LineWidth;
         public static ConfigEntry<float> NodeSize;
         public static ConfigEntry<float> WindowScale;
+        public static ConfigEntry<int> UIFontSizeConfig;
+        public static ConfigEntry<int> HelpTooltipFontSizeConfig;
 
         public static ConfigEntry<Color> ColorVortex;
         public static ConfigEntry<Color> ColorRange;
@@ -48,12 +50,15 @@ namespace AlchAssV3
         public static readonly Dictionary<string, int> MapId = new() {
             { "Water", 0 }, { "Oil", 1 }, { "Wine", 2 } };
         public static readonly string[] WindowTags = [
-            "路径信息", "加水信息", "移动信息", "目标效果", "酿造信息",
-            "效果偏离", "活跃漩涡", "目标漩涡", "研磨信息"];
+            "title_path_status", "title_ladle_status", "title_movement_status", "title_target_effect", "title_brewing_status",
+            "title_effect_deviation", "title_active_vortex", "title_target_vortex", "title_grind_status"];
         #endregion
 
         #region 渲染材质
         public static Texture2D WindowTexture;
+        public static Texture2D HelpMarkerTexture;
+        public static Texture2D TooltipTexture;
+        public static Texture2D TooltipBorderTexture;
         public static Material SolidMaterial;
         public static Material DashedMaterial;
         public static Sprite RoundSprite;
@@ -89,6 +94,9 @@ namespace AlchAssV3
         public static GUIStyle CategoryStyle;
         public static GUIStyle ToggleStyle;
         public static GUIStyle ButtonStyle;
+        public static GUIStyle HelpMarkerStyle;
+        public static GUIStyle TooltipStyle;
+        public static GUIStyle TooltipBorderStyle;
         public static GUIStyle TextFieldStyle;
         public static GUIStyle TextFieldErrorStyle;
         public static GUIStyle LabelStyle;
@@ -154,6 +162,8 @@ namespace AlchAssV3
         public static bool DisplayStage = false;
         public static bool OffsetCorrection = false;
         public static bool DisplayPolar = false;
+        public static int UIFontSize = 16;
+        public static int HelpTooltipFontSize = 14;
 
         public static ConfigEntry<KeyboardShortcut> KeyToggleDisplaySalt;
         public static ConfigEntry<KeyboardShortcut> KeyToggleDisplayStage;

@@ -78,6 +78,12 @@ namespace AlchAssV3
             Variable.LineWidth = Config.Bind("其他设置", "渲染线宽", 0.075f);
             Variable.NodeSize = Config.Bind("其他设置", "渲染点大小", 0.15f);
             Variable.WindowScale = Config.Bind("其他设置", "信息窗口缩放", 0.8f);
+            Variable.UIFontSizeConfig = Config.Bind("其他设置", "功能面板文本点数", 16,
+                new ConfigDescription("控制功能面板内文本的字号。", new AcceptableValueRange<int>(10, 30)));
+            Variable.HelpTooltipFontSizeConfig = Config.Bind("其他设置", "说明文本点数", 14,
+                new ConfigDescription("控制功能面板问号说明文本的字号。", new AcceptableValueRange<int>(10, 30)));
+            Variable.UIFontSize = Variable.UIFontSizeConfig.Value;
+            Variable.HelpTooltipFontSize = Variable.HelpTooltipFontSizeConfig.Value;
 
             Variable.WindowRect = Variable.WindowRectConfig.Value;
             Function.LoadFromBins();
@@ -110,7 +116,7 @@ namespace AlchAssV3
             {
                 if (Variable.WindowStyle == null)
                     UIWindow.InitStyles();
-                Variable.WindowRect = GUILayout.Window(0, Variable.WindowRect, UIWindow.DrawWindow, LocalizationManager.GetText("功能面板"), Variable.WindowStyle);
+                Variable.WindowRect = GUILayout.Window(0, Variable.WindowRect, UIWindow.DrawWindow, LocalizationManager.GetText("title_feature_panel"), Variable.WindowStyle);
             }
         }
         #endregion

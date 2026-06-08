@@ -1,164 +1,205 @@
 [
   {
-    "key": "漩涡切向",
+    "key": "label_vortex_tangent",
     "values": {
+      "zh": "漩涡切向",
       "en": "Vortex Tangent"
     }
   },
   {
-    "key": "路径方向",
+    "key": "label_path_direction",
     "values": {
+      "zh": "路径方向",
       "en": "Path Direction"
     }
   },
   {
-    "key": "效果方向",
+    "key": "label_effect_direction",
     "values": {
+      "zh": "效果方向",
       "en": "Effect Direction"
     }
   },
   {
-    "key": "加水方向",
+    "key": "label_ladle_direction",
     "values": {
+      "zh": "加水方向",
       "en": "Ladle Direction"
     }
   },
   {
-    "key": "漩涡方向",
+    "key": "label_vortex_direction",
     "values": {
+      "zh": "漩涡方向",
       "en": "Vortex Direction"
     }
   },
   {
-    "key": "近点方向",
+    "key": "label_proximity_direction",
     "values": {
+      "zh": "近点方向",
       "en": "Proximity Direction"
     }
   },
   {
-    "key": "旋转角度",
+    "key": "label_rotation",
     "values": {
+      "zh": "旋转角度",
       "en": "Rotation"
     }
   },
   {
-    "key": "搅拌进度",
+    "key": "label_stir_progress",
     "values": {
+      "zh": "搅拌进度",
       "en": "Stir Progress"
     }
   },
   {
-    "key": "阶段进度",
+    "key": "label_phase_progress",
     "values": {
+      "zh": "阶段进度",
       "en": "Phase Progress"
     }
   },
   {
-    "key": "研磨进度",
+    "key": "label_grind_progress",
     "values": {
+      "zh": "研磨进度",
       "en": "Grind Progress"
     }
   },
   {
-    "key": "沼泽长度",
+    "key": "label_swamp_length",
     "values": {
+      "zh": "沼泽长度",
       "en": "Swamp Length"
     }
   },
   {
-    "key": "目标效果",
+    "key": "label_target_effect",
     "values": {
+      "zh": "目标效果",
       "en": "Target Effect"
     }
   },
   {
-    "key": "搅拌阶段",
+    "key": "label_stir_phase",
     "values": {
+      "zh": "搅拌阶段",
       "en": "Stir Phase"
     }
   },
   {
-    "key": "加血需求",
+    "key": "label_healing_requirement",
     "values": {
+      "zh": "加血需求",
       "en": "Healing Requirement"
     }
   },
   {
-    "key": "总体偏离",
+    "key": "label_total_deviation",
     "values": {
+      "zh": "总体偏离",
       "en": "Total Deviation"
     }
   },
   {
-    "key": "位置偏离",
+    "key": "label_position_deviation",
     "values": {
+      "zh": "位置偏离",
       "en": "Position Deviation"
     }
   },
   {
-    "key": "旋转偏离",
+    "key": "label_rotation_deviation",
     "values": {
+      "zh": "旋转偏离",
       "en": "Rotation Deviation"
     }
   },
   {
-    "key": "最大距离",
+    "key": "label_maximum_distance",
     "values": {
+      "zh": "最大距离",
       "en": "Maximum Distance"
     }
   },
   {
-    "key": "漩涡距离",
+    "key": "label_vortex_distance",
     "values": {
+      "zh": "漩涡距离",
       "en": "Vortex Distance"
     }
   },
   {
-    "key": "碰撞偏移",
+    "key": "label_offset",
     "values": {
+      "zh": "碰撞偏移",
       "en": "Offset"
     }
   },
   {
-    "key": "坐标位置",
+    "key": "label_position",
     "values": {
+      "zh": "坐标位置",
       "en": "Position"
     }
   },
   {
-    "key": "漩涡切角",
+    "key": "label_vortex_tangency",
     "values": {
+      "zh": "漩涡切角",
       "en": "Vortex Tangency"
     }
   },
   {
-    "key": "效果夹角",
+    "key": "label_effect_angle",
     "values": {
+      "zh": "效果夹角",
       "en": "Effect Angle"
     }
   },
   {
-    "key": "当前血量",
+    "key": "label_health",
     "values": {
+      "zh": "当前血量",
       "en": "Health"
     }
   },
   {
-    "key": "路径近点",
+    "key": "label_path_proximity",
     "values": {
+      "zh": "路径近点",
       "en": "Path Proximity"
     }
   },
   {
-    "key": "加水近点",
+    "key": "label_ladle_proximity",
     "values": {
+      "zh": "加水近点",
       "en": "Ladle Proximity"
     }
   },
   {
-    "key": "不可用",
+    "key": "label_unavailable",
     "values": {
+      "zh": "不可用",
       "en": "Unavailable"
+    }
+  },
+  {
+    "key": "label_ui_text_size",
+    "values": {
+      "zh": "功能面板文本点数",
+      "en": "Panel Text Size"
+    }
+  },
+  {
+    "key": "label_help_text_size",
+    "values": {
+      "zh": "说明文本点数",
+      "en": "Help Text Size"
     }
   }
 ]

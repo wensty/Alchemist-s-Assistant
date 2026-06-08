@@ -1,0 +1,121 @@
+[
+  {
+    "key": "help_path_line",
+    "values": {
+      "zh": "显示当前药瓶路径的切线方向；需要同时开启“路径曲线”才会实际渲染。",
+      "en": "Shows the tangent direction of the current potion path. Requires Path Curve to be enabled before it is rendered."
+    }
+  },
+  {
+    "key": "help_ladle_line",
+    "values": {
+      "zh": "显示加水后药瓶会移动的方向。",
+      "en": "Shows the direction the potion bottle will move after adding water."
+    }
+  },
+  {
+    "key": "help_effect_line",
+    "values": {
+      "zh": "显示目标效果中心到当前药瓶位置的径向参考线。",
+      "en": "Shows a radial reference line from the target effect center to the current potion position."
+    }
+  },
+  {
+    "key": "help_vortex_line",
+    "values": {
+      "zh": "显示目标漩涡中心到当前药瓶位置的径向参考线。",
+      "en": "Shows a radial reference line from the target vortex center to the current potion position."
+    }
+  },
+  {
+    "key": "help_vortex_tangent",
+    "values": {
+      "zh": "显示目标漩涡处的切线方向；需要同时开启“漩涡曲线”才会实际渲染。",
+      "en": "Shows the tangent direction at the target vortex. Requires Vortex Curve to be enabled before it is rendered."
+    }
+  },
+  {
+    "key": "help_custom_line",
+    "values": {
+      "zh": "显示自定义方向线，并允许用自定义方向线快捷键在地图上增删或调整它们。",
+      "en": "Shows custom direction lines and lets you add, remove, or adjust them on the map with the custom-line shortcut."
+    }
+  },
+  {
+    "key": "help_path_curve",
+    "values": {
+      "zh": "模拟并显示当前药瓶继续搅拌时的路径轨迹。",
+      "en": "Simulates and shows the path the current potion will follow if stirring continues."
+    }
+  },
+  {
+    "key": "help_vortex_curve",
+    "values": {
+      "zh": "模拟并显示选中漩涡中的旋转轨迹。",
+      "en": "Simulates and shows the rotation path inside the selected vortex."
+    }
+  },
+  {
+    "key": "help_effect_range",
+    "values": {
+      "zh": "显示目标效果的判定范围，并配合路径或加水方向显示最近点。",
+      "en": "Shows the target effect range and, with path or ladle direction enabled, shows the closest point."
+    }
+  },
+  {
+    "key": "help_vortex_range",
+    "values": {
+      "zh": "显示目标漩涡的范围，并配合路径或加水方向显示最近点。",
+      "en": "Shows the target vortex range and, with path or ladle direction enabled, shows the closest point."
+    }
+  },
+  {
+    "key": "help_danger_simulation",
+    "values": {
+      "zh": "模拟药瓶路径、加水方向或漩涡轨迹与骷髅区的危险交会点。",
+      "en": "Simulates dangerous intersections between the potion path, ladle direction, or vortex path and skull zones."
+    }
+  },
+  {
+    "key": "help_swamp_simulation",
+    "values": {
+      "zh": "模拟路径轨迹与沼泽区的交会位置和距离。",
+      "en": "Simulates the intersection positions and distance between the path curve and swamp zones."
+    }
+  },
+  {
+    "key": "help_transparency",
+    "values": {
+      "zh": "让药瓶指示器更透明，便于观察下方路径、范围和交会点。",
+      "en": "Makes the potion indicator more transparent so paths, ranges, and intersections underneath are easier to see."
+    }
+  },
+  {
+    "key": "help_salt_data",
+    "values": {
+      "zh": "把部分角度或血量需求换算为对应盐的用量显示。",
+      "en": "Displays some angles or health requirements as the corresponding salt amount."
+    }
+  },
+  {
+    "key": "help_stir_phase",
+    "values": {
+      "zh": "在信息窗口中显示当前搅拌阶段和阶段进度。",
+      "en": "Shows the current stirring phase and phase progress in the info window."
+    }
+  },
+  {
+    "key": "help_polar_coordinates",
+    "values": {
+      "zh": "把位置数据显示为半径和角度，而不是横纵坐标。",
+      "en": "Displays positions as radius and angle instead of X and Y coordinates."
+    }
+  },
+  {
+    "key": "help_collider_correction",
+    "values": {
+      "zh": "使用碰撞体偏移修正药瓶位置，让实体碰撞计算结果更接近地图上的实际判定。",
+      "en": "Uses collider offset to correct the potion position, making calculations closer to the map's actual collision detection."
+    }
+  }
+]

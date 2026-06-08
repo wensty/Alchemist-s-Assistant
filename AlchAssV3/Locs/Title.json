@@ -1,61 +1,71 @@
 [
   {
-    "key": "功能面板",
+    "key": "title_feature_panel",
     "values": {
+      "zh": "功能面板",
       "en": "Feature Panel"
     }
   },
   {
-    "key": "路径信息",
+    "key": "title_path_status",
     "values": {
+      "zh": "路径信息",
       "en": "Path Status"
     }
   },
   {
-    "key": "加水信息",
+    "key": "title_ladle_status",
     "values": {
+      "zh": "加水信息",
       "en": "Ladle Status"
     }
   },
   {
-    "key": "移动信息",
+    "key": "title_movement_status",
     "values": {
+      "zh": "移动信息",
       "en": "Movement Status"
     }
   },
   {
-    "key": "目标效果",
+    "key": "title_target_effect",
     "values": {
+      "zh": "目标效果",
       "en": "Target Effect"
     }
   },
   {
-    "key": "酿造信息",
+    "key": "title_brewing_status",
     "values": {
+      "zh": "酿造信息",
       "en": "Brewing Status"
     }
   },
   {
-    "key": "效果偏离",
+    "key": "title_effect_deviation",
     "values": {
+      "zh": "效果偏离",
       "en": "Effect Deviation"
     }
   },
   {
-    "key": "活跃漩涡",
+    "key": "title_active_vortex",
     "values": {
+      "zh": "活跃漩涡",
       "en": "Active Vortex"
     }
   },
   {
-    "key": "目标漩涡",
+    "key": "title_target_vortex",
     "values": {
+      "zh": "目标漩涡",
       "en": "Target Vortex"
     }
   },
   {
-    "key": "研磨信息",
+    "key": "title_grind_status",
     "values": {
+      "zh": "研磨信息",
       "en": "Grind Status"
     }
   }
