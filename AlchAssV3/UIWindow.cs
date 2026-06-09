@@ -316,7 +316,6 @@ namespace AlchAssV3
                 GUILayout.FlexibleSpace();
                 GUILayout.BeginVertical();
                 Variable.DisplayPolar = DrawHelpToggle(Variable.DisplayPolar, "button_polar_coordinates", Variable.KeyToggleDisplayPolar.Value, "help_polar_coordinates");
-                Variable.OffsetCorrection = DrawHelpToggle(Variable.OffsetCorrection, "button_collider_correction", Variable.KeyToggleDisplayOffset.Value, "help_collider_correction");
                 GUILayout.EndVertical();
                 GUILayout.EndHorizontal();
             }

@@ -140,13 +140,6 @@
     }
   },
   {
-    "key": "button_collider_correction",
-    "values": {
-      "zh": "碰撞体修正",
-      "en": "Collider Correction"
-    }
-  },
-  {
     "key": "button_restore_all_windows",
     "values": {
       "zh": "恢复所有窗口",

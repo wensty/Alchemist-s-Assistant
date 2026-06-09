@@ -160,15 +160,14 @@ namespace AlchAssV3
 
         public static bool DisplaySalt = false;
         public static bool DisplayStage = false;
-        public static bool OffsetCorrection = false;
         public static bool DisplayPolar = false;
         public static int UIFontSize = 16;
         public static int HelpTooltipFontSize = 14;
 
         public static ConfigEntry<KeyboardShortcut> KeyToggleDisplaySalt;
         public static ConfigEntry<KeyboardShortcut> KeyToggleDisplayStage;
-        public static ConfigEntry<KeyboardShortcut> KeyToggleDisplayOffset;
         public static ConfigEntry<KeyboardShortcut> KeyToggleDisplayPolar;
+        public static ConfigEntry<KeyboardShortcut> KeyDumpMapColliders;
 
         #endregion
 

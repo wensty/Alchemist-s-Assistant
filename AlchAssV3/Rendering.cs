@@ -1,4 +1,4 @@
-﻿using PotionCraft.ManagersSystem;
+using PotionCraft.ManagersSystem;
 using System.Linq;
 using UnityEngine;
 
@@ -494,11 +494,12 @@ namespace AlchAssV3
 
             if (Variable.DoTransparency)
             {
-                var indPos = Managers.RecipeMap.recipeMapObject.indicatorContainer.localPosition + Variable.Offset;
+                var indPos = Calculation.GetIndicatorMapCheckPosition();
                 var indRot = -Managers.RecipeMap.indicatorRotation.Value * Mathf.Deg2Rad;
                 var mapTrans = Managers.RecipeMap.currentMap.referencesContainer.transform;
                 Vector3 delta = new(0.74f * Mathf.Sin(indRot), 0.74f * Mathf.Cos(indRot));
-                Vector3[] linePoints = [mapTrans.TransformPoint(indPos), mapTrans.TransformPoint(indPos + delta)];
+                Vector3 indLocalPos = indPos;
+                Vector3[] linePoints = [mapTrans.TransformPoint(indLocalPos), mapTrans.TransformPoint(indLocalPos + delta)];
                 Calculation.InitRange(0.74, indPos.x, indPos.y, out var points);
                 if (Variable.IndicatorRange == null)
                 {

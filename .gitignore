@@ -3,3 +3,6 @@
 obj
 *.sln
 build
+RuntimeDumps
+*.bak
+__pycache__

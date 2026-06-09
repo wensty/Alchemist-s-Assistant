@@ -110,12 +110,5 @@
       "zh": "把位置数据显示为半径和角度，而不是横纵坐标。",
       "en": "Displays positions as radius and angle instead of X and Y coordinates."
     }
-  },
-  {
-    "key": "help_collider_correction",
-    "values": {
-      "zh": "使用碰撞体偏移修正药瓶位置，让实体碰撞计算结果更接近地图上的实际判定。",
-      "en": "Uses collider offset to correct the potion position, making calculations closer to the map's actual collision detection."
-    }
   }
 ]

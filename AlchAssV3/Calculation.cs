@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+using HarmonyLib;
 using PotionCraft.LocalizationSystem;
 using PotionCraft.ManagersSystem;
 using PotionCraft.ObjectBased.Mortar;
@@ -117,7 +117,8 @@ namespace AlchAssV3
             var vortexText = LocalizationManager.GetText("label_unavailable");
             if (Managers.RecipeMap.CurrentVortexMapItem != null)
             {
-                var p = Managers.RecipeMap.CurrentVortexMapItem.thisTransform.localPosition - Variable.Offset;
+                Vector2 vortexPos = Managers.RecipeMap.CurrentVortexMapItem.thisTransform.localPosition;
+                var p = vortexPos - GetPotionBasePosition();
                 var r = ((CircleCollider2D)Traverse.Create(Managers.RecipeMap.CurrentVortexMapItem).Field("vortexCollider").GetValue()).radius + 0.74f;
                 var a = (float)Variable.VortexA;
                 var b = r * r / (p.magnitude * Mathf.Sqrt(r * r + a * a));
@@ -167,8 +168,8 @@ namespace AlchAssV3
         /// </summary>
         public static string CalculateBrewing(float health)
         {
-            var indPos = Managers.RecipeMap.recipeMapObject.indicatorContainer.localPosition + Variable.Offset;
-            var offPos = Managers.RecipeMap.indicator.thisTransform.localPosition;
+            var indPos = GetIndicatorMapCheckPosition();
+            var offPos = GetIndicatorLocalOffset();
             var indRot = Managers.RecipeMap.indicatorRotation.Value;
             var posText = Function.FormatPosition(indPos);
             var offText = Function.FormatPosition(offPos);
@@ -191,7 +192,7 @@ namespace AlchAssV3
 
             Vector2 targetPos = Variable.TargetEffect.transform.localPosition;
             var targetRot = Variable.TargetEffect.transform.localEulerAngles.z;
-            var indPos = Managers.RecipeMap.recipeMapObject.indicatorContainer.localPosition + Variable.Offset;
+            var indPos = GetIndicatorMapCheckPosition();
             var indRot = Managers.RecipeMap.indicatorRotation.Value;
 
             var devPos = Vector2.Distance(targetPos, indPos) * 1800f;
@@ -216,8 +217,8 @@ namespace AlchAssV3
             if (Managers.RecipeMap.CurrentVortexMapItem == null)
                 return "";
 
-            var indPos = Managers.RecipeMap.recipeMapObject.indicatorContainer.localPosition + Variable.Offset;
-            var vortexPos = Managers.RecipeMap.CurrentVortexMapItem.thisTransform.localPosition;
+            var indPos = GetIndicatorLogicPosition();
+            Vector2 vortexPos = Managers.RecipeMap.CurrentVortexMapItem.thisTransform.localPosition;
 
             var disText = $"{Vector2.Distance(vortexPos, indPos)}";
             var maxText = $"{((CircleCollider2D)Traverse.Create(Managers.RecipeMap.CurrentVortexMapItem).Field("vortexCollider").GetValue()).radius + 0.74f}";
@@ -242,7 +243,7 @@ namespace AlchAssV3
             if (mapindex == 2 || Variable.VortexIndex[mapindex] < 0)
                 return "";
 
-            var indPos = Managers.RecipeMap.recipeMapObject.indicatorContainer.localPosition + Variable.Offset;
+            var indPos = GetIndicatorMapCheckPosition();
             var selVortex = Variable.Vortexs[mapindex][Variable.VortexIndex[mapindex]];
             var vortexPos = new Vector2((float)selVortex.x, (float)selVortex.y);
 
@@ -273,14 +274,76 @@ namespace AlchAssV3
 
         #region 渲染信息计算
         /// <summary>
-        /// 更新偏移
+        /// 指示器逻辑位置。游戏加水和漩涡移动主要使用这个容器位置。
+        /// </summary>
+        public static Vector2 GetIndicatorLogicPosition()
+        {
+            return Managers.RecipeMap.recipeMapObject.indicatorContainer.localPosition;
+        }
+
+        /// <summary>
+        /// 指示器子物体局部偏移。用于调试显示和 collider 轨迹推导。
+        /// </summary>
+        public static Vector2 GetIndicatorLocalOffset()
+        {
+            return Managers.RecipeMap.indicator.thisTransform.localPosition;
+        }
+
+        /// <summary>
+        /// 指示器 collider 当前随子物体偏移后的地图坐标。
+        /// </summary>
+        public static Vector2 GetIndicatorColliderPosition()
+        {
+            return GetIndicatorLogicPosition() + GetIndicatorLocalOffset();
+        }
+
+        /// <summary>
+        /// 指示器 collider transform 的实际地图坐标，用于校验 Unity 触发器碰撞位置。
+        /// </summary>
+        public static Vector2 GetIndicatorColliderMapPosition()
+        {
+            var mapTrans = Managers.RecipeMap.currentMap.referencesContainer.transform;
+            return mapTrans.InverseTransformPoint(Managers.RecipeMap.indicator.circleCollider.transform.position);
+        }
+
+        /// <summary>
+        /// 指示器 collider 实际地图坐标相对容器坐标的偏移。
+        /// </summary>
+        public static Vector2 GetIndicatorColliderMapOffset()
+        {
+            return GetIndicatorColliderMapPosition() - GetIndicatorLogicPosition();
+        }
+
+        /// <summary>
+        /// 游戏的效果等级距离、溶剂方向和显式地图物体距离检查均使用容器位置。
+        /// </summary>
+        public static Vector2 GetIndicatorMapCheckPosition()
+        {
+            return GetIndicatorLogicPosition();
+        }
+
+        /// <summary>
+        /// 溶剂会把指示器推向当前药剂基底的地图位置。
+        /// </summary>
+        public static Vector2 GetPotionBasePosition()
+        {
+            return Managers.RecipeMap.currentMap.referencesContainer.potionBaseMapItem.transform.localPosition;
+        }
+
+        /// <summary>
+        /// 缓存指示器子物体局部偏移，仅用于信息窗口显示。
         /// </summary>
         public static void UpdateOffset()
         {
-            if (Variable.OffsetCorrection)
-                Variable.Offset = Managers.RecipeMap.indicator.thisTransform.localPosition;
-            else
-                Variable.Offset = Vector3.zero;
+            Variable.Offset = GetIndicatorLocalOffset();
+        }
+
+        /// <summary>
+        /// 加水过程中的碰撞轨迹终点。
+        /// </summary>
+        public static Vector2 GetLadleCollisionTargetPosition()
+        {
+            return GetIndicatorColliderPosition() + (GetPotionBasePosition() - GetIndicatorLogicPosition());
         }
 
         /// <summary>
@@ -302,7 +365,7 @@ namespace AlchAssV3
             if (!Variable.DoLines[1])
                 Variable.LineDirections[1] = double.NaN;
             else
-                Variable.LineDirections[1] = Vector2.SignedAngle(Vector2.right, -Managers.RecipeMap.recipeMapObject.indicatorContainer.localPosition);
+                Variable.LineDirections[1] = Vector2.SignedAngle(Vector2.right, GetPotionBasePosition() - GetIndicatorLogicPosition());
         }
 
         /// <summary>
@@ -314,8 +377,8 @@ namespace AlchAssV3
                 Variable.LineDirections[2] = double.NaN;
             else
             {
-                var targetPos = Variable.TargetEffect.transform.localPosition;
-                var indPos = Managers.RecipeMap.recipeMapObject.indicatorContainer.localPosition + Variable.Offset;
+                Vector2 targetPos = Variable.TargetEffect.transform.localPosition;
+                var indPos = GetIndicatorMapCheckPosition();
                 Variable.LineDirections[2] = Vector2.SignedAngle(Vector2.right, targetPos - indPos);
             }
         }
@@ -335,8 +398,8 @@ namespace AlchAssV3
                 else
                 {
                     var selVortex = Variable.Vortexs[mapindex][Variable.VortexIndex[mapindex]];
-                    var vortexPos = new Vector3((float)selVortex.x, (float)selVortex.y);
-                    var indPos = Managers.RecipeMap.recipeMapObject.indicatorContainer.localPosition + Variable.Offset;
+                    var vortexPos = new Vector2((float)selVortex.x, (float)selVortex.y);
+                    var indPos = GetIndicatorMapCheckPosition();
                     Variable.LineDirections[3] = Vector2.SignedAngle(Vector2.right, vortexPos - indPos);
                 }
             }
@@ -370,7 +433,7 @@ namespace AlchAssV3
             var dx = Math.Cos(rad);
             var dy = Math.Sin(rad);
             var mapTrans = Managers.RecipeMap.currentMap.referencesContainer.transform;
-            var indPos = Managers.RecipeMap.recipeMapObject.indicatorContainer.localPosition + Variable.Offset;
+            var indPos = GetIndicatorMapCheckPosition();
             List<Vector3> points = [];
 
             if (Math.Abs(dx) > 1e-5)
@@ -415,20 +478,29 @@ namespace AlchAssV3
             var pathTrans = Managers.RecipeMap.path.thisTransform;
             var stIn = ZonePart.GetZonesActivePartsCount(typeof(SwampZonePart)) > 0;
             var stSet = Vector3.zero;
-            var indPos = Managers.RecipeMap.recipeMapObject.indicatorContainer.localPosition;
+            var indPos = GetIndicatorLogicPosition();
             var mapId = Managers.RecipeMap.currentMap.potionBase.name;
             var lineIn = stIn;
             List<(Vector2, int, double)> swampPos = [];
 
-            Variable.PathPhysical.Add((indPos + Variable.Offset, false));
+            Variable.PathPhysical.Add((indPos, false));
             for (int i = 0; i < pathHints.Count; i++)
             {
                 var hint = pathHints[i];
                 var isTp = hint.GetType().Name == "TeleportationFixedHint";
                 var points = hint.evenlySpacedPointsFixedPhysics.points.Select(point => mapTrans.InverseTransformPoint(pathTrans.TransformPoint(point))).ToList();
-                if (points.Count() < 2) continue;
-                if (i == 0) points[0] = indPos;
-                if (isTp) points = [points[0], points[points.Count - 1]];
+                var graphicalPoints = hint.evenlySpacedPointsFixedGraphics.points.Select(point => mapTrans.InverseTransformPoint(pathTrans.TransformPoint(point))).ToList();
+                if (points.Count() < 2 || graphicalPoints.Count() < 2) continue;
+                if (i == 0)
+                {
+                    points[0] = indPos;
+                    graphicalPoints[0] = indPos;
+                }
+                if (isTp)
+                {
+                    points = [points[0], points[points.Count - 1]];
+                    graphicalPoints = [graphicalPoints[0], graphicalPoints[graphicalPoints.Count - 1]];
+                }
                 if (Variable.DoSwampPoint && mapId == "Oil")
                 {
                     Geometry.ScalePath(points, stIn, stSet, Variable.PathPhysical.Count - 1, isTp, out var pointsSc, out var pos, out var edIn, out var edSet);
@@ -436,8 +508,8 @@ namespace AlchAssV3
                     swampPos.AddRange(pos);
                 }
 
-                Variable.PathPhysical.AddRange(points.Skip(1).Select(point => (point + Variable.Offset, isTp)));
-                Variable.PathGraphical.Add(([.. points.Select(point => mapTrans.TransformPoint(point + Variable.Offset))], isTp));
+                Variable.PathPhysical.AddRange(points.Skip(1).Select(point => (point, isTp)));
+                Variable.PathGraphical.Add(([.. graphicalPoints.Select(point => mapTrans.TransformPoint(point))], isTp));
             }
             Variable.SwampPositions.AddRange(swampPos.Select(x => x.Item1));
             if (Variable.DoSwampPoint && mapId == "Oil")
@@ -458,8 +530,8 @@ namespace AlchAssV3
             if (curVortex == null)
                 return;
 
-            var vortexPos = curVortex.thisTransform.localPosition;
-            var indPos = Managers.RecipeMap.recipeMapObject.indicatorContainer.localPosition + Variable.Offset;
+            Vector2 vortexPos = curVortex.thisTransform.localPosition;
+            var indPos = GetIndicatorLogicPosition();
             var maxDis = ((CircleCollider2D)Traverse.Create(curVortex).Field("vortexCollider").GetValue()).radius + 0.74;
             var distance = Vector2.Distance(vortexPos, indPos);
             if (distance > maxDis + 1e-5)
@@ -521,8 +593,10 @@ namespace AlchAssV3
             Variable.DangerDistanceLadle = double.NaN;
             Variable.DangerDistanceVortex = double.NaN;
 
-            var indPos = Managers.RecipeMap.recipeMapObject.indicatorContainer.localPosition + Variable.Offset;
-            List<(Vector3, bool)> pathLadle = [(indPos, false), (Variable.Offset, false)];
+            var indPos = GetIndicatorMapCheckPosition();
+            var ladleColliderPos = GetIndicatorColliderPosition();
+            var ladleTargetPos = GetLadleCollisionTargetPosition();
+            List<(Vector3, bool)> pathLadle = [(ladleColliderPos, false), (ladleTargetPos, false)];
             bool[] inDanger = [
                 ZonePart.GetZonesActivePartsCount(typeof(StrongDangerZonePart)) > 0,
                 ZonePart.GetZonesActivePartsCount(typeof(WeakDangerZonePart)) > 0,
@@ -654,16 +728,16 @@ namespace AlchAssV3
             }
 
             if (closeELadleEn)
-                Geometry.SqrDisToPoint(indPos, Variable.Offset, effectPos, false, out _, out Variable.ClosestPositions[2]);
+                Geometry.SqrDisToPoint(ladleColliderPos, ladleTargetPos, effectPos, false, out _, out Variable.ClosestPositions[2]);
             if (closeVLadleEn)
-                Geometry.SqrDisToPoint(indPos, Variable.Offset, vortexPos, false, out _, out Variable.ClosestPositions[3]);
+                Geometry.SqrDisToPoint(ladleColliderPos, ladleTargetPos, vortexPos, false, out _, out Variable.ClosestPositions[3]);
             if (effectLadleEn)
-                Geometry.TargetRange(indPos, Variable.Offset, effectPos, false, out Variable.IntersectionPositions[1]);
+                Geometry.TargetRange(ladleColliderPos, ladleTargetPos, effectPos, false, out Variable.IntersectionPositions[1]);
             if (vortexLadleEn)
-                Geometry.VortexRange(indPos, Variable.Offset, vortexPos, vortexRad, false, out Variable.IntersectionPositions[3]);
+                Geometry.VortexRange(ladleColliderPos, ladleTargetPos, vortexPos, vortexRad, false, out Variable.IntersectionPositions[3]);
             if (dangerLadleEn)
             {
-                Geometry.DangerLine(indPos, Variable.Offset, mapId, 0, false, out var dangerLadle);
+                Geometry.DangerLine(ladleColliderPos, ladleTargetPos, mapId, 0, false, out var dangerLadle);
                 Geometry.DefeatLine(pathLadle, dangerLadle, health, inDanger, mapId, out Variable.DefeatPositions[1], out Variable.DangerDistanceLadle);
                 Variable.DangerPositions[1].AddRange(dangerLadle.Select(x => x.Item1));
             }

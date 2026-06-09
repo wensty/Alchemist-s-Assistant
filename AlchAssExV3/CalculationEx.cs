@@ -1,4 +1,4 @@
-﻿using AlchAssV3;
+using AlchAssV3;
 using PotionCraft.ManagersSystem;
 using PotionCraft.ObjectBased.RecipeMap.RecipeMapItem.Zones;
 using System.Linq;
@@ -74,7 +74,7 @@ namespace AlchAssExV3
 
                 if (VariableEx.EnableEffectIntersection)
                 {
-                    var indPos = Managers.RecipeMap.recipeMapObject.indicatorContainer.localPosition + Variable.Offset;
+                    var indPos = Calculation.GetIndicatorMapCheckPosition();
                     var dis = Vector2.Distance(indPos, targetPos) - VariableEx.EffectDeviation / 1800f;
                     if (dis > 0f)
                     {
@@ -145,7 +145,7 @@ namespace AlchAssExV3
 
                 if (VariableEx.EnableVortexIntersection)
                 {
-                    var indPos = Managers.RecipeMap.recipeMapObject.indicatorContainer.localPosition + Variable.Offset;
+                    var indPos = Calculation.GetIndicatorMapCheckPosition();
                     var dis = Vector2.Distance(indPos, vortexPos) - (float)selVortex.r;
                     if (dis > 0f)
                     {
@@ -210,7 +210,7 @@ namespace AlchAssExV3
         {
             if (VariableEx.EnableDangerIntersection)
             {
-                var indPos = Managers.RecipeMap.recipeMapObject.indicatorContainer.localPosition + Variable.Offset;
+                var indPos = Calculation.GetIndicatorMapCheckPosition();
                 var disList = Variable.DangerPositions.Where(list => list.Any()).Select(list => list[0]).Select(pos => Vector2.Distance(indPos, pos));
                 if (disList.Any())
                 {
@@ -318,7 +318,7 @@ namespace AlchAssExV3
             {
                 if (Variable.SwampPositions.Any())
                 {
-                    var indPos = Managers.RecipeMap.recipeMapObject.indicatorContainer.localPosition + Variable.Offset;
+                    var indPos = Calculation.GetIndicatorMapCheckPosition();
                     var dis = Vector2.Distance(indPos, Variable.SwampPositions[0]);
                     if (ZonePart.GetZonesActivePartsCount(typeof(SwampZonePart)) > 0)
                     {

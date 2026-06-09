@@ -72,8 +72,8 @@ namespace AlchAssV3
 
             Variable.KeyToggleDisplaySalt = Config.Bind("可选快捷键", "开关显示盐量", new KeyboardShortcut(KeyCode.None));
             Variable.KeyToggleDisplayStage = Config.Bind("可选快捷键", "开关显示阶段", new KeyboardShortcut(KeyCode.None));
-            Variable.KeyToggleDisplayOffset = Config.Bind("可选快捷键", "开关显示偏移", new KeyboardShortcut(KeyCode.None));
             Variable.KeyToggleDisplayPolar = Config.Bind("可选快捷键", "开关显示极坐标", new KeyboardShortcut(KeyCode.None));
+            Variable.KeyDumpMapColliders = Config.Bind("可选快捷键", "导出地图碰撞体", new KeyboardShortcut(KeyCode.F12));
 
             Variable.LineWidth = Config.Bind("其他设置", "渲染线宽", 0.075f);
             Variable.NodeSize = Config.Bind("其他设置", "渲染点大小", 0.15f);
