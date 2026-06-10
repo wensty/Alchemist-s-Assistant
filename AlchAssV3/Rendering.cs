@@ -182,8 +182,8 @@ namespace AlchAssV3
             var logicAnchor = Calculation.GetIndicatorLogicPosition();
             var colliderAnchor = Calculation.GetIndicatorColliderPosition();
             var effectAnchor = Variable.DoColliderAttachment ? colliderAnchor : logicAnchor;
-            Vector2[] closestAnchors = [effectAnchor, logicAnchor, effectAnchor, logicAnchor];
-            Vector2[] intersectionAnchors = [effectAnchor, effectAnchor, logicAnchor, logicAnchor];
+            Vector2[] closestAnchors = [effectAnchor, colliderAnchor, effectAnchor, colliderAnchor];
+            Vector2[] intersectionAnchors = [effectAnchor, effectAnchor, colliderAnchor, colliderAnchor];
 
             for (var i = 0; i < 4; i++)
             {
