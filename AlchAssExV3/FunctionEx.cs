@@ -141,6 +141,7 @@ namespace AlchAssExV3
             VariableEx.AutoStirSpeed = 1f;
             VariableEx.AutoLadleSpeed = 1f;
             VariableEx.AutoHeatSpeed = 1f;
+            VariableEx.StirringPrevious = Calculation.GetStirringProgress();
 
             VariableEx.EffectIntersectionPrevious = false;
             VariableEx.VortexIntersectionPrevious = false;

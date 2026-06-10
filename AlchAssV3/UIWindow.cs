@@ -316,8 +316,10 @@ namespace AlchAssV3
                 GUILayout.FlexibleSpace();
                 GUILayout.BeginVertical();
                 Variable.DisplayPolar = DrawHelpToggle(Variable.DisplayPolar, "button_polar_coordinates", Variable.KeyToggleDisplayPolar.Value, "help_polar_coordinates");
+                Variable.EnableColliderAttachment = DrawHelpToggle(Variable.EnableColliderAttachment, "button_collider_attachment", Variable.KeyEnableColliderAttachment.Value, "help_collider_attachment");
                 GUILayout.EndVertical();
                 GUILayout.EndHorizontal();
+                Function.UpdateDoFromEnable();
             }
             GUILayout.Space(10);
         }

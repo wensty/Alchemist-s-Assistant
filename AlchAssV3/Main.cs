@@ -69,11 +69,11 @@ namespace AlchAssV3
             Variable.KeyEnableDangerSimulation = Config.Bind("可选快捷键", "开关危险点模拟", new KeyboardShortcut(KeyCode.None));
             Variable.KeyEnableSwampSimulation = Config.Bind("可选快捷键", "开关沼泽模拟", new KeyboardShortcut(KeyCode.None));
             Variable.KeyEnableTransparency = Config.Bind("可选快捷键", "开关透明药瓶", new KeyboardShortcut(KeyCode.None));
+            Variable.KeyEnableColliderAttachment = Config.Bind("可选快捷键", "开关图像贴附到碰撞体位置", new KeyboardShortcut(KeyCode.None));
 
             Variable.KeyToggleDisplaySalt = Config.Bind("可选快捷键", "开关显示盐量", new KeyboardShortcut(KeyCode.None));
             Variable.KeyToggleDisplayStage = Config.Bind("可选快捷键", "开关显示阶段", new KeyboardShortcut(KeyCode.None));
             Variable.KeyToggleDisplayPolar = Config.Bind("可选快捷键", "开关显示极坐标", new KeyboardShortcut(KeyCode.None));
-            Variable.KeyDumpMapColliders = Config.Bind("可选快捷键", "导出地图碰撞体", new KeyboardShortcut(KeyCode.F12));
 
             Variable.LineWidth = Config.Bind("其他设置", "渲染线宽", 0.075f);
             Variable.NodeSize = Config.Bind("其他设置", "渲染点大小", 0.15f);

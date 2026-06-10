@@ -6,6 +6,28 @@ The tool reads `RuntimeDumps/map_colliders_*.json`, expands selected map-space
 colliders by the potion indicator radius, writes `Line`/`Arc` primitives, and
 builds the same binary BVH layout used by `Function.LoadZoneFromBin`.
 
+Vortex bins are intentionally different. `Vortex_Water.bin` and
+`Vortex_Oil.bin` store only a compact circle list:
+
+```text
+int32 count
+count * (float64 x, float64 y, float64 radius)
+```
+
+They do not contain a BVH. The runtime selects a vortex by checking the mouse
+point against each circle, and all path/ladle-vortex intersections use direct
+line-circle checks.
+
+```powershell
+python Tools\BinFromDump\generate_vortex_bin_from_dump.py `
+  RuntimeDumps\map_colliders_Water_20260608_233506.json `
+  AlchAssV3\Bins\Vortex_Water.bin
+```
+
+The script writes the compact circle list directly. The game maps checked so
+far do not contain positions that can touch two vortices at the same time, so no
+overlap guard is needed here.
+
 ## Example
 
 ```powershell

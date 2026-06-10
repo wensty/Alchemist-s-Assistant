@@ -16,9 +16,7 @@ namespace AlchAssExV3
         {
             if (VariableEx.EnableQuantitativeStirring)
             {
-                var phase = Managers.RecipeMap.path.deletedGraphicsSegments;
-                var progress = Managers.RecipeMap.path.segmentLengthToDeletePhysics;
-                var curStr = phase + progress;
+                var curStr = Calculation.GetStirringProgress();
                 VariableEx.StirringLength -= Mathf.Max(0f, curStr - VariableEx.StirringPrevious);
                 VariableEx.StirringLength = Mathf.Max(0f, VariableEx.StirringLength);
                 VariableEx.InputStirringLength = ($"{VariableEx.StirringLength}", false);

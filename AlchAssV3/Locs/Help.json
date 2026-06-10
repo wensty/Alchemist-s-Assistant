@@ -91,6 +91,13 @@
     }
   },
   {
+    "key": "help_collider_attachment",
+    "values": {
+      "zh": "把预测点、路径线、方向线、自定义线、危险/沼泽交点以及透明瓶身参考线贴附到药瓶碰撞体位置；默认贴附到逻辑位置。",
+      "en": "Attaches predicted points, path lines, direction lines, custom lines, danger/swamp points, and transparent-indicator reference lines to the potion collider position. Default to attach to the logic position."
+    }
+  },
+  {
     "key": "help_salt_data",
     "values": {
       "zh": "把部分角度或血量需求换算为对应盐的用量显示。",

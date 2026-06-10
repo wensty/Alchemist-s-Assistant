@@ -1,3 +1,4 @@
+using BepInEx;
 using PotionCraft.DebugObjects.DebugWindows;
 using PotionCraft.InputSystem;
 using PotionCraft.LocalizationSystem;
@@ -253,14 +254,18 @@ namespace AlchAssV3
                 Variable.EnableSwampSimulation = !Variable.EnableSwampSimulation;
             if (Variable.KeyEnableTransparency.Value.IsDown())
                 Variable.EnableTransparency = !Variable.EnableTransparency;
+            if (Variable.KeyEnableColliderAttachment.Value.IsDown())
+                Variable.EnableColliderAttachment = !Variable.EnableColliderAttachment;
             if (Variable.KeyToggleDisplaySalt.Value.IsDown())
                 Variable.DisplaySalt = !Variable.DisplaySalt;
             if (Variable.KeyToggleDisplayStage.Value.IsDown())
                 Variable.DisplayStage = !Variable.DisplayStage;
             if (Variable.KeyToggleDisplayPolar.Value.IsDown())
                 Variable.DisplayPolar = !Variable.DisplayPolar;
-            if (Variable.KeyDumpMapColliders.Value.IsDown())
+#if DEBUG
+            if (Keyboard.current?.f12Key.wasPressedThisFrame == true)
                 DumpMapColliders();
+#endif
         }
 
         /// <summary>
@@ -274,6 +279,7 @@ namespace AlchAssV3
             Variable.DoEffectRange = Variable.EnableEffectRange;
             Variable.DoVortexRange = Variable.EnableVortexRange;
             Variable.DoTransparency = Variable.EnableTransparency;
+            Variable.DoColliderAttachment = Variable.EnableColliderAttachment;
             Variable.DoPathEffectPoint = Variable.EnablePathCurve && Variable.EnableEffectRange;
             Variable.DoLadleEffectPoint = Variable.EnableLadleLine && Variable.EnableEffectRange;
             Variable.DoPathVortexPoint = Variable.EnablePathCurve && Variable.EnableVortexRange;
@@ -290,6 +296,7 @@ namespace AlchAssV3
         }
         #endregion
 
+#if DEBUG
         #region 调试导出
         /// <summary>
         /// 导出当前地图和指示器相关的 Collider2D 运行时参数。
@@ -299,7 +306,7 @@ namespace AlchAssV3
             if (Managers.RecipeMap?.currentMap?.referencesContainer == null)
                 return;
 
-            const string dumpDirectory = @"C:\Users\98608\source\repos\Alchemist-s-Assistant\RuntimeDumps";
+            var dumpDirectory = Path.Combine(Paths.ConfigPath, "AlchAssV3", "RuntimeDumps");
             Directory.CreateDirectory(dumpDirectory);
 
             var mapName = Managers.RecipeMap.currentMap.potionBase?.name ?? "UnknownMap";
@@ -334,7 +341,7 @@ namespace AlchAssV3
             sb.AppendLine("}");
 
             File.WriteAllText(filePath, sb.ToString(), Encoding.UTF8);
-            Debug.Log($"[AlchAssV3] Map colliders dumped to {filePath}");
+            Debug.Log($"[AlchAssV3] Map colliders dumped to config/AlchAssV3/RuntimeDumps/{fileName}");
         }
 
         private static IEnumerable<Collider2D> GetMapColliderDumpTargets()
@@ -681,6 +688,7 @@ namespace AlchAssV3
                 .Append('}');
         }
         #endregion
+#endif
 
         #region 加载数据
         /// <summary>

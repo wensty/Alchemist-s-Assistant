@@ -125,6 +125,7 @@ namespace AlchAssV3
         public static bool EnableDangerSimulation = false;
         public static bool EnableSwampSimulation = false;
         public static bool EnableTransparency = false;
+        public static bool EnableColliderAttachment = false;
 
         public static ConfigEntry<KeyboardShortcut> KeyShowShortcut;
         public static ConfigEntry<KeyboardShortcut> KeyEnablePathLine;
@@ -140,6 +141,7 @@ namespace AlchAssV3
         public static ConfigEntry<KeyboardShortcut> KeyEnableDangerSimulation;
         public static ConfigEntry<KeyboardShortcut> KeyEnableSwampSimulation;
         public static ConfigEntry<KeyboardShortcut> KeyEnableTransparency;
+        public static ConfigEntry<KeyboardShortcut> KeyEnableColliderAttachment;
 
         public static bool DoCustomLine = false;
         public static bool DoPathCurve = false;
@@ -155,6 +157,7 @@ namespace AlchAssV3
         public static bool DoLadleDangerPoint = false;
         public static bool DoVortexDangerPoint = false;
         public static bool DoSwampPoint = false;
+        public static bool DoColliderAttachment = false;
         public static bool[] DoLines = [false, false, false, false, false];
         // 0 - 路径切向线; 1 - 加水方向线; 2 - 效果径向线; 3 - 漩涡径向线; 4 - 漩涡切向线
 
@@ -167,7 +170,6 @@ namespace AlchAssV3
         public static ConfigEntry<KeyboardShortcut> KeyToggleDisplaySalt;
         public static ConfigEntry<KeyboardShortcut> KeyToggleDisplayStage;
         public static ConfigEntry<KeyboardShortcut> KeyToggleDisplayPolar;
-        public static ConfigEntry<KeyboardShortcut> KeyDumpMapColliders;
 
         #endregion
 
@@ -223,6 +225,7 @@ namespace AlchAssV3
         public static List<Vector2>[] IntersectionPositions = [[], [], [], []];
         // 0 - 路径和效果; 1 - 路径和漩涡; 2 - 加水和效果; 3 - 加水和漩涡
         public static List<(Vector3, bool)> PathPhysical = [];
+        public static List<(Vector3, bool)> PathCollision = [];
         public static List<(Vector3[], bool)> PathGraphical = [];
 
         public static Rect WindowRect = new(200, 200, 400, 400);

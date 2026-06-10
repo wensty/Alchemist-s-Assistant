@@ -119,6 +119,13 @@
     }
   },
   {
+    "key": "button_collider_attachment",
+    "values": {
+      "zh": "贴附碰撞体",
+      "en": "Attach to Collider"
+    }
+  },
+  {
     "key": "button_salt_data",
     "values": {
       "zh": "盐量数据",

@@ -2,6 +2,23 @@
 
 - `PotionCraftPath`: PotionCraft 安装路径
 
+# 编译指令
+
+Debug 构建会包含调试导出功能；在游戏中按 F12 会把碰撞体 dump 输出到
+`BepInEx/config/AlchAssV3/RuntimeDumps`。Release 构建不会编译该调试功能。
+
+```powershell
+dotnet build .\AlchAssV3\AlchAssV3.csproj -c Debug -p:Platform=AnyCPU
+dotnet build .\AlchAssV3\AlchAssV3.csproj -c Release -p:Platform=AnyCPU
+```
+
+副模组依赖主模组源码，构建副模组时会同时构建主模组：
+
+```powershell
+dotnet build .\AlchAssExV3\AlchAssExV3.csproj -c Debug -p:Platform=AnyCPU
+dotnet build .\AlchAssExV3\AlchAssExV3.csproj -c Release -p:Platform=AnyCPU
+```
+
 # AlchAss 功能介绍
 
 ## 基本概念
@@ -12,6 +29,7 @@
 - 沼泽区：油基地图上会使药瓶移动时打滑的区域
 - <span id="note-collision-deviation"></span>碰撞偏移：游戏中存在的漏洞，当进行某些操作后，会出现药瓶的坐标位置和碰撞体位置不同的情况。游戏中大多数实体接触判定（如漩涡、骷髅区、沼泽区、回复区等）都使用碰撞体位置，但效果等级判定和加水方向使用坐标位置。
 - 效果等级：L0 对应无法获取效果，L1 至 L3 分别对应可获取 I 至 III 级效果。按 III 级效果最大偏差程度为 100% 折算**总体**偏差比例 P，P <= 100% 时可获得 III 级；100% < P <= 600% 时可获得 II 级；P > 600% 且**位置**偏差比例 P_p <= 2754% 时可获得 I 级
+- 注意1级依赖药瓶的碰撞体位置，而2~3级的距离误差计算依赖药瓶的逻辑位置，行为并不一致。
 
 ## 按键操作
 
@@ -46,7 +64,7 @@
 - 盐量数据：切换信息窗口中旋转角度和药瓶生命的显示方式（原始角度/折算旋转盐量、剩余血量或血量缺口/折算生命盐量）
 - 搅拌阶段：切换信息窗口中搅拌进度的显示方式（阶段与进度之和/分别显示阶段和进度）
 - 极坐标：切换信息窗口中坐标的显示方式（直角坐标/极坐标）
-- 碰撞体位置：切换模组对于药瓶位置的计算方式（原始坐标/碰撞偏移下实际坐标）[碰撞偏移](#note-collision-deviation)
+- 贴附碰撞体位置：切换预测图像和效果最近点/效果范围交点使用的基础位置（逻辑位置/碰撞体位置）。地图实体碰撞仍按碰撞体轨迹计算，漩涡和溶剂移动等仍按对应系统使用的位置计算。[碰撞偏移](#note-collision-deviation)
 
 ### 窗口管理
 

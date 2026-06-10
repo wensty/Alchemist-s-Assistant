@@ -36,10 +36,6 @@
       <HintPath>$(PotionCraftPath)\BepInEx\core\0Harmony20.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="AlchAssV3, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(PotionCraftPath)\BepInEx\plugins\AlchAssV3.dll</HintPath>
-    </Reference>
     <Reference Include="BepInEx">
       <HintPath>$(PotionCraftPath)\BepInEx\core\BepInEx.dll</HintPath>
       <Private>False</Private>
@@ -585,6 +581,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Locs\Label.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AlchAssV3\AlchAssV3.csproj">
+      <Project>{F76900F7-C7A2-4C30-A22A-8F2DB19D29D4}</Project>
+      <Name>AlchAssV3</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

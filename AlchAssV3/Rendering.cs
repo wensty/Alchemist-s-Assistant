@@ -144,6 +144,29 @@ namespace AlchAssV3
             sprite.color = color;
             sprite.enabled = true;
         }
+
+        private static Vector2 GetRenderAttachOffset(Vector2 sourceAnchor)
+        {
+            var renderAnchor = Variable.DoColliderAttachment ? Calculation.GetIndicatorColliderPosition() : Calculation.GetIndicatorLogicPosition();
+            return renderAnchor - sourceAnchor;
+        }
+
+        private static Vector3 RenderMapPoint(Transform mapTrans, Vector2 point, Vector2 sourceAnchor)
+        {
+            return mapTrans.TransformPoint(point + GetRenderAttachOffset(sourceAnchor));
+        }
+
+        private static Vector3[] RenderMapPoints(Transform mapTrans, Vector3[] points, Vector2 sourceAnchor)
+        {
+            var offset = (Vector3)GetRenderAttachOffset(sourceAnchor);
+            return points.Select(point => point + offset).Select(point => mapTrans.TransformPoint(point)).ToArray();
+        }
+
+        private static Vector3[] RenderWorldPoints(Transform mapTrans, Vector3[] points, Vector2 sourceAnchor)
+        {
+            var offset = mapTrans.TransformVector((Vector3)GetRenderAttachOffset(sourceAnchor));
+            return points.Select(point => point + offset).ToArray();
+        }
         #endregion
 
         #region 渲染对象
@@ -156,12 +179,17 @@ namespace AlchAssV3
             bool[] IntersectionEnables = [Variable.DoPathEffectPoint, Variable.DoLadleEffectPoint, Variable.DoPathVortexPoint, Variable.DoLadleVortexPoint];
             bool[] DangerEnables = [Variable.DoPathDangerPoint, Variable.DoLadleDangerPoint, Variable.DoVortexDangerPoint];
             var mapTrans = Managers.RecipeMap.currentMap.referencesContainer.transform;
+            var logicAnchor = Calculation.GetIndicatorLogicPosition();
+            var colliderAnchor = Calculation.GetIndicatorColliderPosition();
+            var effectAnchor = Variable.DoColliderAttachment ? colliderAnchor : logicAnchor;
+            Vector2[] closestAnchors = [effectAnchor, logicAnchor, effectAnchor, logicAnchor];
+            Vector2[] intersectionAnchors = [effectAnchor, effectAnchor, logicAnchor, logicAnchor];
 
             for (var i = 0; i < 4; i++)
             {
                 if (ClosestEnables[i] && !float.IsNaN(Variable.ClosestPositions[i].x))
                 {
-                    var posDev = mapTrans.TransformPoint(Variable.ClosestPositions[i]);
+                    var posDev = RenderMapPoint(mapTrans, Variable.ClosestPositions[i], closestAnchors[i]);
                     if (Variable.ClosestPoints[i] == null)
                         InitSpriteRenderer(ref Variable.ClosestPoints[i]);
                     UpdateSpriteRenderer(Variable.SquareSprite, Variable.ColorClosest.Value, ref Variable.ClosestPoints[i], posDev, (float)Variable.NodeSize.Value, 4);
@@ -176,7 +204,7 @@ namespace AlchAssV3
                 {
                     for (var j = 0; j < Variable.IntersectionPositions[i].Count; j++)
                     {
-                        var posDev = mapTrans.TransformPoint(Variable.IntersectionPositions[i][j]);
+                        var posDev = RenderMapPoint(mapTrans, Variable.IntersectionPositions[i][j], intersectionAnchors[i]);
 
                         if (Variable.IntersectionPoints[i].Count <= j)
                         {
@@ -211,7 +239,8 @@ namespace AlchAssV3
             {
                 if (DangerEnables[i] && !float.IsNaN(Variable.DefeatPositions[i].x))
                 {
-                    var posDev = mapTrans.TransformPoint(Variable.DefeatPositions[i]);
+                    var sourceAnchor = i == 1 || i == 2 ? colliderAnchor : colliderAnchor;
+                    var posDev = RenderMapPoint(mapTrans, Variable.DefeatPositions[i], sourceAnchor);
                     if (Variable.DefeatPoints[i] == null)
                         InitSpriteRenderer(ref Variable.DefeatPoints[i]);
                     UpdateSpriteRenderer(Variable.SquareSprite, Variable.ColorDefeat.Value, ref Variable.DefeatPoints[i], posDev, (float)Variable.NodeSize.Value, 4);
@@ -223,7 +252,8 @@ namespace AlchAssV3
                 {
                     for (var j = 0; j < Variable.DangerPositions[i].Count; j++)
                     {
-                        var posDev = mapTrans.TransformPoint(Variable.DangerPositions[i][j]);
+                        var sourceAnchor = i == 1 || i == 2 ? colliderAnchor : colliderAnchor;
+                        var posDev = RenderMapPoint(mapTrans, Variable.DangerPositions[i][j], sourceAnchor);
 
                         if (Variable.DangerPoints[i].Count <= j)
                         {
@@ -258,7 +288,7 @@ namespace AlchAssV3
             {
                 for (var i = 0; i < Variable.SwampPositions.Count; i++)
                 {
-                    var posDev = mapTrans.TransformPoint(Variable.SwampPositions[i]);
+                    var posDev = RenderMapPoint(mapTrans, Variable.SwampPositions[i], colliderAnchor);
 
                     if (Variable.SwampPoints.Count <= i)
                     {
@@ -295,6 +325,8 @@ namespace AlchAssV3
         public static void SetLineRenderers()
         {
             Variable.BaseLadleRenderer.enabled = !Variable.DoLines[1];
+            var mapTrans = Managers.RecipeMap.currentMap.referencesContainer.transform;
+            var logicAnchor = Calculation.GetIndicatorLogicPosition();
 
             for (var i = 0; i < 5; i++)
             {
@@ -303,6 +335,7 @@ namespace AlchAssV3
                     Calculation.InitLine(Variable.LineDirections[i], out var points);
                     if (points.Length == 2)
                     {
+                        points = RenderWorldPoints(mapTrans, points, logicAnchor);
                         if (Variable.Lines[i] == null)
                             InitLineRenderer(ref Variable.Lines[i]);
                         UpdateLineRenderer(Variable.SolidMaterial, Variable.ColorLines[i].Value, ref Variable.Lines[i], points, false, 3);
@@ -322,9 +355,12 @@ namespace AlchAssV3
         {
             if (Variable.DoCustomLine && Variable.CustomLineDirections.Count > 0)
             {
+                var mapTrans = Managers.RecipeMap.currentMap.referencesContainer.transform;
+                var logicAnchor = Calculation.GetIndicatorLogicPosition();
                 for (var i = 0; i < Variable.CustomLineDirections.Count; i++)
                 {
                     Calculation.InitLine(Variable.CustomLineDirections[i], out var points);
+                    points = RenderWorldPoints(mapTrans, points, logicAnchor);
                     var color = Variable.CustomLineHovers[i] || Variable.TargetLineIndex == i ? Variable.ColorCustomHover.Value : Variable.ColorCustomNormal.Value;
                     var order = Variable.CustomLineHovers[i] || Variable.TargetLineIndex == i ? 6 : 5;
 
@@ -366,9 +402,11 @@ namespace AlchAssV3
 
             if (Variable.DoPathCurve && Variable.PathGraphical.Count > 0)
             {
+                var mapTrans = Managers.RecipeMap.currentMap.referencesContainer.transform;
+                var logicAnchor = Calculation.GetIndicatorLogicPosition();
                 for (var i = 0; i < Variable.PathGraphical.Count; i++)
                 {
-                    var points = Variable.PathGraphical[i].Item1;
+                    var points = RenderWorldPoints(mapTrans, Variable.PathGraphical[i].Item1, logicAnchor);
                     var isTp = Variable.PathGraphical[i].Item2;
                     var material = isTp ? Variable.DashedMaterial : Variable.SolidMaterial;
                     var color = Variable.ColorPaths[i % 2].Value;
@@ -403,9 +441,12 @@ namespace AlchAssV3
 
             if (Variable.DoVortexCurve && Variable.VortexGraphical.Length >= 2)
             {
+                var mapTrans = Managers.RecipeMap.currentMap.referencesContainer.transform;
+                var logicAnchor = Calculation.GetIndicatorLogicPosition();
+                var points = RenderWorldPoints(mapTrans, Variable.VortexGraphical, logicAnchor);
                 if (Variable.VortexCurve == null)
                     InitLineRenderer(ref Variable.VortexCurve);
-                UpdateLineRenderer(Variable.SolidMaterial, Variable.ColorVortex.Value, ref Variable.VortexCurve, Variable.VortexGraphical, false, 2);
+                UpdateLineRenderer(Variable.SolidMaterial, Variable.ColorVortex.Value, ref Variable.VortexCurve, points, false, 2);
             }
             else if (Variable.VortexCurve != null)
                 Object.Destroy(Variable.VortexCurve.gameObject);
@@ -494,7 +535,7 @@ namespace AlchAssV3
 
             if (Variable.DoTransparency)
             {
-                var indPos = Calculation.GetIndicatorMapCheckPosition();
+                var indPos = Variable.DoColliderAttachment ? Calculation.GetIndicatorColliderPosition() : Calculation.GetIndicatorLogicPosition();
                 var indRot = -Managers.RecipeMap.indicatorRotation.Value * Mathf.Deg2Rad;
                 var mapTrans = Managers.RecipeMap.currentMap.referencesContainer.transform;
                 Vector3 delta = new(0.74f * Mathf.Sin(indRot), 0.74f * Mathf.Cos(indRot));

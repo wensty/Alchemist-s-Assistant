@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate an AlchAssV3 Vortex_*.bin file from a runtime collider dump."""
+"""Generate an AlchAssV3 Vortex_*.bin circle-list file from a runtime collider dump."""
 
 from __future__ import annotations
 
@@ -20,7 +20,7 @@ def point(value: dict[str, Any]) -> tuple[float, float]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Generate a Vortex bin from dumped vortex EntryPoint colliders.")
+    parser = argparse.ArgumentParser(description="Generate a compact Vortex circle-list bin from dumped EntryPoint colliders.")
     parser.add_argument("dump", type=Path)
     parser.add_argument("output", type=Path)
     parser.add_argument("--indicator-radius", type=float, default=None)
@@ -50,6 +50,7 @@ def main() -> int:
         rows.append((path, cx, cy, radius))
 
     rows.sort(key=lambda item: natural_key(item[0]))
+
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("wb") as stream:
         stream.write(struct.pack("<i", len(rows)))
