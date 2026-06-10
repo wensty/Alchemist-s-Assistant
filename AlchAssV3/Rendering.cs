@@ -175,21 +175,21 @@ namespace AlchAssV3
         /// </summary>
         public static void SetNodeRenderers()
         {
-            bool[] ClosestEnables = [Variable.DoPathCurve, Variable.DoPathCurve, Variable.DoLines[1], Variable.DoLines[1]];
-            bool[] IntersectionEnables = [Variable.DoPathEffectPoint, Variable.DoLadleEffectPoint, Variable.DoPathVortexPoint, Variable.DoLadleVortexPoint];
-            bool[] DangerEnables = [Variable.DoPathDangerPoint, Variable.DoLadleDangerPoint, Variable.DoVortexDangerPoint];
+            bool[] closestEnables = [Variable.DoPathCurve, Variable.DoPathCurve, Variable.DoLines[1], Variable.DoLines[1]];
+            bool[] intersectionEnables = [Variable.DoPathEffectPoint, Variable.DoLadleEffectPoint, Variable.DoPathVortexPoint, Variable.DoLadleVortexPoint];
+            bool[] dangerEnables = [Variable.DoPathDangerPoint, Variable.DoLadleDangerPoint, Variable.DoVortexDangerPoint];
             var mapTrans = Managers.RecipeMap.currentMap.referencesContainer.transform;
             var logicAnchor = Calculation.GetIndicatorLogicPosition();
             var colliderAnchor = Calculation.GetIndicatorColliderPosition();
             var effectAnchor = Variable.DoColliderAttachment ? colliderAnchor : logicAnchor;
-            Vector2[] closestAnchors = [effectAnchor, colliderAnchor, effectAnchor, colliderAnchor];
-            Vector2[] intersectionAnchors = [effectAnchor, effectAnchor, colliderAnchor, colliderAnchor];
+            Vector2[] closestSourceAnchors = [effectAnchor, colliderAnchor, effectAnchor, colliderAnchor];
+            Vector2[] intersectionSourceAnchors = [effectAnchor, effectAnchor, colliderAnchor, colliderAnchor];
 
             for (var i = 0; i < 4; i++)
             {
-                if (ClosestEnables[i] && !float.IsNaN(Variable.ClosestPositions[i].x))
+                if (closestEnables[i] && !float.IsNaN(Variable.ClosestPositions[i].x))
                 {
-                    var posDev = RenderMapPoint(mapTrans, Variable.ClosestPositions[i], closestAnchors[i]);
+                    var posDev = RenderMapPoint(mapTrans, Variable.ClosestPositions[i], closestSourceAnchors[i]);
                     if (Variable.ClosestPoints[i] == null)
                         InitSpriteRenderer(ref Variable.ClosestPoints[i]);
                     UpdateSpriteRenderer(Variable.SquareSprite, Variable.ColorClosest.Value, ref Variable.ClosestPoints[i], posDev, (float)Variable.NodeSize.Value, 4);
@@ -200,11 +200,11 @@ namespace AlchAssV3
 
             for (var i = 0; i < 4; i++)
             {
-                if (IntersectionEnables[i] && Variable.IntersectionPositions[i].Count > 0)
+                if (intersectionEnables[i] && Variable.IntersectionPositions[i].Count > 0)
                 {
                     for (var j = 0; j < Variable.IntersectionPositions[i].Count; j++)
                     {
-                        var posDev = RenderMapPoint(mapTrans, Variable.IntersectionPositions[i][j], intersectionAnchors[i]);
+                        var posDev = RenderMapPoint(mapTrans, Variable.IntersectionPositions[i][j], intersectionSourceAnchors[i]);
 
                         if (Variable.IntersectionPoints[i].Count <= j)
                         {
@@ -237,10 +237,9 @@ namespace AlchAssV3
 
             for (var i = 0; i < 3; i++)
             {
-                if (DangerEnables[i] && !float.IsNaN(Variable.DefeatPositions[i].x))
+                if (dangerEnables[i] && !float.IsNaN(Variable.DefeatPositions[i].x))
                 {
-                    var sourceAnchor = i == 1 || i == 2 ? colliderAnchor : colliderAnchor;
-                    var posDev = RenderMapPoint(mapTrans, Variable.DefeatPositions[i], sourceAnchor);
+                    var posDev = RenderMapPoint(mapTrans, Variable.DefeatPositions[i], colliderAnchor);
                     if (Variable.DefeatPoints[i] == null)
                         InitSpriteRenderer(ref Variable.DefeatPoints[i]);
                     UpdateSpriteRenderer(Variable.SquareSprite, Variable.ColorDefeat.Value, ref Variable.DefeatPoints[i], posDev, (float)Variable.NodeSize.Value, 4);
@@ -248,12 +247,11 @@ namespace AlchAssV3
                 else if (Variable.DefeatPoints[i] != null)
                     Object.Destroy(Variable.DefeatPoints[i].gameObject);
 
-                if (DangerEnables[i] && Variable.DangerPositions[i].Count > 0)
+                if (dangerEnables[i] && Variable.DangerPositions[i].Count > 0)
                 {
                     for (var j = 0; j < Variable.DangerPositions[i].Count; j++)
                     {
-                        var sourceAnchor = i == 1 || i == 2 ? colliderAnchor : colliderAnchor;
-                        var posDev = RenderMapPoint(mapTrans, Variable.DangerPositions[i][j], sourceAnchor);
+                        var posDev = RenderMapPoint(mapTrans, Variable.DangerPositions[i][j], colliderAnchor);
 
                         if (Variable.DangerPoints[i].Count <= j)
                         {

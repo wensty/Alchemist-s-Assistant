@@ -223,7 +223,7 @@ namespace AlchAssV3
         public static List<Vector2>[] DangerPositions = [[], [], []];
         // 0 - 路径; 1 - 加水; 2 - 漩涡
         public static List<Vector2>[] IntersectionPositions = [[], [], [], []];
-        // 0 - 路径和效果; 1 - 路径和漩涡; 2 - 加水和效果; 3 - 加水和漩涡
+        // 0 - 路径和效果; 1 - 加水和效果; 2 - 路径和漩涡; 3 - 加水和漩涡
         public static List<(Vector3, bool)> PathPhysical = [];
         public static List<(Vector3, bool)> PathCollision = [];
         public static List<(Vector3[], bool)> PathGraphical = [];
