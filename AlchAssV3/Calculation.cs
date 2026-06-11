@@ -444,7 +444,7 @@ namespace AlchAssV3
             var indPos = GetIndicatorMapCheckPosition();
             List<Vector3> points = [];
 
-            if (Math.Abs(dx) > 1e-5)
+            if (Math.Abs(dx) > 1e-6)
             {
                 var t = (-80 - indPos.x) / dx;
                 var y = indPos.y + t * dy;
@@ -455,7 +455,7 @@ namespace AlchAssV3
                 if (y >= -80 && y <= 80)
                     points.Add(mapTrans.TransformPoint(new(80, (float)y)));
             }
-            if (Math.Abs(dy) > 1e-5)
+            if (Math.Abs(dy) > 1e-6)
             {
                 var t = (-80 - indPos.y) / dy;
                 var x = indPos.x + t * dx;
