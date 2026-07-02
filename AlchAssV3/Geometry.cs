@@ -736,8 +736,8 @@ namespace AlchAssV3
                 for (var i = 0; i < lenPath; i += 100)
                 {
                     var lt = Math.Min(lenPath, i + 100);
-                    var minx = -double.MaxValue; var maxx = double.MaxValue;
-                    var miny = -double.MaxValue; var maxy = double.MaxValue;
+                    var minx = double.MaxValue; var maxx = -double.MaxValue;
+                    var miny = double.MaxValue; var maxy = -double.MaxValue;
 
                     for (var j = i; j <= lt; j++)
                     {

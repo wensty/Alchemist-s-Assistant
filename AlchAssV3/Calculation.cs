@@ -517,6 +517,7 @@ namespace AlchAssV3
                 {
                     Geometry.ScalePath(points, stIn, stSet, Variable.PathPhysical.Count - 1, isTp, out var pointsSc, out var pos, out var edIn, out var edSet);
                     stIn = edIn; stSet = edSet; points = pointsSc;
+                    graphicalPoints = points;
                     swampPos.AddRange(pos);
                 }
 
@@ -627,8 +628,8 @@ namespace AlchAssV3
             var ladleLogicPos = GetIndicatorLogicPosition();
             var ladleLogicTargetPos = GetPotionBasePosition();
             var ladleColliderPos = GetIndicatorColliderPosition();
-            var ladleColloderTargetPos = GetLadleCollisionTargetPosition();
-            List<(Vector3, bool)> pathLadle = [(ladleColliderPos, false), (ladleColloderTargetPos, false)];
+            var ladleColliderTargetPos = GetLadleCollisionTargetPosition();
+            List<(Vector3, bool)> pathLadle = [(ladleColliderPos, false), (ladleColliderTargetPos, false)];
             bool[] inDanger = [
                 ZonePart.GetZonesActivePartsCount(typeof(StrongDangerZonePart)) > 0,
                 ZonePart.GetZonesActivePartsCount(typeof(WeakDangerZonePart)) > 0,
@@ -670,10 +671,8 @@ namespace AlchAssV3
 
             var lenPath = Variable.PathPhysical.Count() - 1;
             var effectCheckPath = Variable.DoColliderAttachment ? Variable.PathCollision : Variable.PathPhysical;
-            var colliderAttachOffset = ladleColliderPos - ladleLogicPos; // 中间变量
-            var effectAttachOffset = Variable.DoColliderAttachment ? colliderAttachOffset : Vector2.zero;
             var effectLadleStartPos = Variable.DoColliderAttachment ? ladleColliderPos : ladleLogicPos;
-            var effectLadleEndPos = Variable.DoColliderAttachment ? ladleColloderTargetPos : ladleLogicTargetPos;
+            var effectLadleEndPos = Variable.DoColliderAttachment ? ladleColliderTargetPos : ladleLogicTargetPos;
             if (lenPath > 0)
             {
                 if (closeEPathEn || closeVPathEn)
@@ -683,10 +682,6 @@ namespace AlchAssV3
 
                     for (var i = 0; i < lenPath; i++)
                     {
-                        Vector2 p0 = Variable.PathPhysical[i].Item1;
-                        Vector2 p1 = Variable.PathPhysical[i + 1].Item1;
-                        var isTp = Variable.PathPhysical[i + 1].Item2;
-
                         if (closeEPathEn)
                         {
                             Vector2 effectP0 = effectCheckPath[i].Item1;
@@ -720,15 +715,16 @@ namespace AlchAssV3
                     for (var i = 0; i < lenPath; i += 100) // 批量预处理和排除。
                     {
                         var lt = Math.Min(lenPath, i + 100);
-                        GetPathAABB(Variable.PathPhysical, i, lt, out var minx, out var miny, out var maxx, out var maxy);
+                        GetPathAABB(effectCheckPath, i, lt, out var effectMinx, out var effectMiny, out var effectMaxx, out var effectMaxy);
+                        GetPathAABB(Variable.PathCollision, i, lt, out var vortexMinx, out var vortexMiny, out var vortexMaxx, out var vortexMaxy);
 
                         var effectPathEnC = effectPathEn && Geometry.RangeAABB(
-                            minx + effectAttachOffset.x, miny + effectAttachOffset.y,
-                            maxx + effectAttachOffset.x, maxy + effectAttachOffset.y,
+                            effectMinx, effectMiny,
+                            effectMaxx, effectMaxy,
                             effectPos, 1.53);
                         var vortexPathEnC = vortexPathEn && Geometry.RangeAABB(
-                            minx + colliderAttachOffset.x, miny + colliderAttachOffset.y,
-                            maxx + colliderAttachOffset.x, maxy + colliderAttachOffset.y,
+                            vortexMinx, vortexMiny,
+                            vortexMaxx, vortexMaxy,
                             vortexPos, vortexRad);
 
                         if (effectPathEnC)
@@ -788,14 +784,14 @@ namespace AlchAssV3
             if (closeELadleEn)
                 Geometry.SqrDisToPoint(effectLadleStartPos, effectLadleEndPos, effectPos, false, out _, out Variable.ClosestPositions[2]);
             if (closeVLadleEn)
-                Geometry.SqrDisToPoint(ladleColliderPos, ladleColloderTargetPos, vortexPos, false, out _, out Variable.ClosestPositions[3]);
+                Geometry.SqrDisToPoint(ladleColliderPos, ladleColliderTargetPos, vortexPos, false, out _, out Variable.ClosestPositions[3]);
             if (effectLadleEn)
                 Geometry.TargetRange(effectLadleStartPos, effectLadleEndPos, effectPos, false, out Variable.IntersectionPositions[1]);
             if (vortexLadleEn)
-                Geometry.VortexRange(ladleColliderPos, ladleColloderTargetPos, vortexPos, vortexRad, false, out Variable.IntersectionPositions[3]);
+                Geometry.VortexRange(ladleColliderPos, ladleColliderTargetPos, vortexPos, vortexRad, false, out Variable.IntersectionPositions[3]);
             if (dangerLadleEn)
             {
-                Geometry.DangerLine(ladleColliderPos, ladleColloderTargetPos, mapId, 0, false, out var dangerLadle);
+                Geometry.DangerLine(ladleColliderPos, ladleColliderTargetPos, mapId, 0, false, out var dangerLadle);
                 Geometry.DefeatLine(pathLadle, dangerLadle, health, inDanger, mapId, out Variable.DefeatPositions[1], out Variable.DangerDistanceLadle);
                 Variable.DangerPositions[1].AddRange(dangerLadle.Select(x => x.Item1));
             }
