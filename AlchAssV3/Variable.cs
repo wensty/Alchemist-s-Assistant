@@ -217,7 +217,7 @@ namespace AlchAssV3
         public static Vector2[] ClosestPositions = new Vector2[4];
         // 0 - 路径和效果; 1 - 路径和漩涡; 2 - 加水和效果; 3 - 加水和漩涡
         public static Vector2[] EffectClosestPositions = new Vector2[4];
-        // 0 - 路径和效果T1; 1 - 路径和效果T2~3; 2 - 加水和效果T1; 3 - 加水和效果T2~3
+        // 0 - 路径和效果L1; 1 - 路径和效果L2~3; 2 - 加水和效果L1; 3 - 加水和效果L2~3
         public static Vector2[] DefeatPositions = new Vector2[3];
         // 0 - 路径; 1 - 加水; 2 - 漩涡
         public static Vector3[] VortexGraphical;
@@ -227,7 +227,7 @@ namespace AlchAssV3
         public static List<Vector2>[] IntersectionPositions = [[], [], [], []];
         // 0 - 路径和效果; 1 - 加水和效果; 2 - 路径和漩涡; 3 - 加水和漩涡
         public static List<Vector2>[] EffectIntersectionPositions = [[], [], [], []];
-        // 0 - 路径和效果T1; 1 - 路径和效果T2~3; 2 - 加水和效果T1; 3 - 加水和效果T2~3
+        // 0 - 路径和效果L1; 1 - 路径和效果L2~3; 2 - 加水和效果L1; 3 - 加水和效果L2~3
         public static List<(Vector3, bool)> PathPhysical = [];
         public static List<(Vector3, bool)> PathCollision = [];
         public static List<(Vector3[], bool)> PathGraphical = [];

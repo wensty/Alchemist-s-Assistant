@@ -12,7 +12,7 @@ namespace AlchAssV3
 {
     public static class Calculation
     {
-        private static bool TryFormatEffectDeviation(Vector2 closestPos, Vector2 targetPos, float targetRot,
+        private static bool TryFormatEffectDeviation(Vector2 closestPos, Vector2 targetPos, float targetRot, bool useColliderTier,
             out string devPosText, out string devTotText, out string closestDirText)
         {
             devPosText = LocalizationManager.GetText("label_unavailable");
@@ -25,8 +25,12 @@ namespace AlchAssV3
             var devRot = Mathf.Abs(Mathf.DeltaAngle(Managers.RecipeMap.indicatorRotation.Value, targetRot)) / 3f * 25f;
             var devTot = devPos + devRot;
 
-            var lvlPos = devPos <= 100f ? 3 : devPos <= 600f ? 2 : devPos <= 2754f ? 1 : 0;
-            var lvlTot = devTot <= 100f ? 3 : devTot <= 600f ? 2 : devPos <= 2754f ? 1 : 0;
+            var lvlPos = useColliderTier
+                ? devPos <= 2754f ? 1 : 0
+                : devPos <= 100f ? 3 : devPos <= 600f ? 2 : 0;
+            var lvlTot = useColliderTier
+                ? devPos <= 2754f ? 1 : 0
+                : devTot <= 100f ? 3 : devTot <= 600f ? 2 : 0;
             var closestDir = Vector2.SignedAngle(Vector2.right, closestPos - targetPos);
 
             devPosText = $"<color=red>L{lvlPos}</color> {devPos}%";
@@ -41,7 +45,7 @@ namespace AlchAssV3
         /// </summary>
         public static string CalculatePath()
         {
-            var effectTierText = Variable.DoColliderAttachment ? "T1" : "T2~3";
+            var effectTierText = Variable.DoColliderAttachment ? "L1" : "L2~3";
             var effectClosestIndex = Variable.DoColliderAttachment ? 0 : 1;
             string devTotText = LocalizationManager.GetText("label_unavailable");
             string devPosText = LocalizationManager.GetText("label_unavailable");
@@ -54,7 +58,7 @@ namespace AlchAssV3
             {
                 Vector2 targetPos = Variable.TargetEffect.transform.localPosition;
                 var targetRot = Variable.TargetEffect.transform.localEulerAngles.z;
-                TryFormatEffectDeviation(Variable.EffectClosestPositions[effectClosestIndex], targetPos, targetRot,
+                TryFormatEffectDeviation(Variable.EffectClosestPositions[effectClosestIndex], targetPos, targetRot, Variable.DoColliderAttachment,
                     out devPosText, out devTotText, out closestDirText);
             }
 
@@ -82,7 +86,7 @@ namespace AlchAssV3
         /// </summary>
         public static string CalculateLadle()
         {
-            var effectTierText = Variable.DoColliderAttachment ? "T1" : "T2~3";
+            var effectTierText = Variable.DoColliderAttachment ? "L1" : "L2~3";
             var effectClosestIndex = Variable.DoColliderAttachment ? 2 : 3;
             string devTotText = LocalizationManager.GetText("label_unavailable");
             string devPosText = LocalizationManager.GetText("label_unavailable");
@@ -94,7 +98,7 @@ namespace AlchAssV3
             {
                 Vector2 targetPos = Variable.TargetEffect.transform.localPosition;
                 var targetRot = Variable.TargetEffect.transform.localEulerAngles.z;
-                TryFormatEffectDeviation(Variable.EffectClosestPositions[effectClosestIndex], targetPos, targetRot,
+                TryFormatEffectDeviation(Variable.EffectClosestPositions[effectClosestIndex], targetPos, targetRot, Variable.DoColliderAttachment,
                     out devPosText, out devTotText, out closestDirText);
             }
 
@@ -203,11 +207,11 @@ namespace AlchAssV3
             Vector2 targetPos = Variable.TargetEffect.transform.localPosition;
             var targetRot = Variable.TargetEffect.transform.localEulerAngles.z;
             var indRot = Managers.RecipeMap.indicatorRotation.Value;
-            var effectTierText = Variable.DoColliderAttachment ? "T1" : "T2~3";
+            var effectTierText = Variable.DoColliderAttachment ? "L1" : "L2~3";
             var indPos = Variable.DoColliderAttachment ? GetIndicatorColliderPosition() : GetIndicatorLogicPosition();
 
             var devRot = Mathf.Abs(Mathf.DeltaAngle(indRot, targetRot)) / 3f * 25f;
-            TryFormatEffectDeviation(indPos, targetPos, targetRot,
+            TryFormatEffectDeviation(indPos, targetPos, targetRot, Variable.DoColliderAttachment,
                 out var devPosText, out var devTotText, out _);
 
             var lvlRot = devRot <= 100f ? 3 : devRot <= 600f ? 2 : 1;
