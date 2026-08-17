@@ -8,6 +8,14 @@ namespace AlchAssExV3
 {
     public static class CalculationEx
     {
+        private static float GetClosestEffectDistance(Vector2 targetPos, int tier1Index, int tier23Index)
+        {
+            var distances = new[] { Variable.EffectClosestPositions[tier1Index], Variable.EffectClosestPositions[tier23Index] }
+                .Where(pos => !float.IsNaN(pos.x))
+                .Select(pos => Vector2.Distance(pos, targetPos));
+            return distances.Any() ? distances.Min() : float.NaN;
+        }
+
         #region 自动控制计算
         /// <summary>
         /// 计算定量操作速度
@@ -89,9 +97,11 @@ namespace AlchAssExV3
 
                 if (VariableEx.EnableEffectAlignment)
                 {
-                    var disLd = Vector2.Distance(Variable.ClosestPositions[0], targetPos) - VariableEx.EffectDeviation / 1800f;
-                    var disSt = Vector2.Distance(Variable.ClosestPositions[2], targetPos) - VariableEx.EffectDeviation / 1800f;
-                    if (disSt > 0f)
+                    var disLd = GetClosestEffectDistance(targetPos, 0, 1) - VariableEx.EffectDeviation / 1800f;
+                    var disSt = GetClosestEffectDistance(targetPos, 2, 3) - VariableEx.EffectDeviation / 1800f;
+                    if (float.IsNaN(disSt))
+                        VariableEx.StirSpeedEffect = float.MaxValue;
+                    else if (disSt > 0f)
                     {
                         VariableEx.StirSpeedEffect = Mathf.Max(FunctionEx.GetAutoControlSpeed(disSt), VariableEx.AutoCrossSpeed.Value);
                         VariableEx.EffectAlignmentStirPrevious = true;
@@ -101,7 +111,9 @@ namespace AlchAssExV3
                     else
                         VariableEx.StirSpeedEffect = FunctionEx.GetAutoControlSpeed(-disSt);
 
-                    if (disLd > 0f)
+                    if (float.IsNaN(disLd))
+                        VariableEx.LadleSpeedEffect = float.MaxValue;
+                    else if (disLd > 0f)
                     {
                         VariableEx.LadleSpeedEffect = Mathf.Max(FunctionEx.GetAutoControlSpeed(disLd), VariableEx.AutoCrossSpeed.Value);
                         VariableEx.EffectAlignmentLadlePrevious = true;

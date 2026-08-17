@@ -290,6 +290,14 @@ namespace AlchAssV3
         /// </summary>
         public static void TargetRange(Vector2 p0, Vector2 p1, Vector2 cen, bool isTp, out List<Vector2> pos)
         {
+            TargetRange(p0, p1, cen, isTp, 0, 3, out pos);
+        }
+
+        /// <summary>
+        /// 预处理目标范围检测
+        /// </summary>
+        public static void TargetRange(Vector2 p0, Vector2 p1, Vector2 cen, bool isTp, int tierBegin, int tierEnd, out List<Vector2> pos)
+        {
             pos = [];
             if (Math.Abs(p0.x - p1.x) < 1e-6 && Math.Abs(p0.y - p1.y) < 1e-6)
                 return;
@@ -298,7 +306,7 @@ namespace AlchAssV3
             var devRot = Mathf.Abs(Mathf.DeltaAngle(Managers.RecipeMap.indicatorRotation.Value, targetRot));
             double[] targetRad = [1.53, 1.0 / 3.0 - devRot / 216.0, 1.0 / 18.0 - devRot / 216.0];
 
-            for (var i = 0; i < 3; i++)
+            for (var i = tierBegin; i < tierEnd; i++)
             {
                 LineVsCircle(p0, p1, cen, targetRad[i], out var points, out _);
                 pos.AddRange(points);

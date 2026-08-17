@@ -12,12 +12,37 @@ namespace AlchAssV3
 {
     public static class Calculation
     {
+        private static bool TryFormatEffectDeviation(Vector2 closestPos, Vector2 targetPos, float targetRot,
+            out string devPosText, out string devTotText, out string closestDirText)
+        {
+            devPosText = LocalizationManager.GetText("label_unavailable");
+            devTotText = LocalizationManager.GetText("label_unavailable");
+            closestDirText = LocalizationManager.GetText("label_unavailable");
+            if (float.IsNaN(closestPos.x))
+                return false;
+
+            var devPos = Vector2.Distance(targetPos, closestPos) * 1800f;
+            var devRot = Mathf.Abs(Mathf.DeltaAngle(Managers.RecipeMap.indicatorRotation.Value, targetRot)) / 3f * 25f;
+            var devTot = devPos + devRot;
+
+            var lvlPos = devPos <= 100f ? 3 : devPos <= 600f ? 2 : devPos <= 2754f ? 1 : 0;
+            var lvlTot = devTot <= 100f ? 3 : devTot <= 600f ? 2 : devPos <= 2754f ? 1 : 0;
+            var closestDir = Vector2.SignedAngle(Vector2.right, closestPos - targetPos);
+
+            devPosText = $"<color=red>L{lvlPos}</color> {devPos}%";
+            devTotText = $"<color=red>L{lvlTot}</color> {devTot}%";
+            closestDirText = $"{closestDir}°";
+            return true;
+        }
+
         #region 窗口信息计算
         /// <summary>
         /// 计算路径信息
         /// </summary>
         public static string CalculatePath()
         {
+            var effectTierText = Variable.DoColliderAttachment ? "T1" : "T2~3";
+            var effectClosestIndex = Variable.DoColliderAttachment ? 0 : 1;
             string devTotText = LocalizationManager.GetText("label_unavailable");
             string devPosText = LocalizationManager.GetText("label_unavailable");
             string closestDirText = LocalizationManager.GetText("label_unavailable");
@@ -25,21 +50,12 @@ namespace AlchAssV3
             string lifeSaltText = LocalizationManager.GetText("label_unavailable");
             string swampDisText = LocalizationManager.GetText("label_unavailable");
 
-            if (!float.IsNaN(Variable.ClosestPositions[0].x))
+            if (Variable.TargetEffect != null)
             {
                 Vector2 targetPos = Variable.TargetEffect.transform.localPosition;
                 var targetRot = Variable.TargetEffect.transform.localEulerAngles.z;
-                var devPos = Vector2.Distance(targetPos, Variable.ClosestPositions[0]) * 1800f;
-                var devRot = Mathf.Abs(Mathf.DeltaAngle(Managers.RecipeMap.indicatorRotation.Value, targetRot)) / 3f * 25f;
-                var devTot = devPos + devRot;
-
-                var lvlPos = devPos <= 100f ? 3 : devPos <= 600f ? 2 : devPos <= 2754f ? 1 : 0;
-                var lvlTot = devTot <= 100f ? 3 : devTot <= 600f ? 2 : devPos <= 2754f ? 1 : 0;
-                var closestDir = Vector2.SignedAngle(Vector2.right, Variable.ClosestPositions[0] - targetPos);
-
-                devPosText = $"<color=red>L{lvlPos}</color> {devPos}%";
-                devTotText = $"<color=red>L{lvlTot}</color> {devTot}%";
-                closestDirText = $"{closestDir}°";
+                TryFormatEffectDeviation(Variable.EffectClosestPositions[effectClosestIndex], targetPos, targetRot,
+                    out devPosText, out devTotText, out closestDirText);
             }
 
             if (!double.IsNaN(Variable.LineDirections[0]) && !double.IsNaN(Variable.LineDirections[2]))
@@ -52,9 +68,9 @@ namespace AlchAssV3
             if (!double.IsNaN(Variable.DistanceSwamp))
                 swampDisText = $"{(float)Variable.DistanceSwamp}";
             return $"""
-                {LocalizationManager.GetText("label_total_deviation")}: {devTotText}
-                {LocalizationManager.GetText("label_position_deviation")}: {devPosText}
-                {LocalizationManager.GetText("label_proximity_direction")}: {closestDirText}
+                {LocalizationManager.GetText("label_total_deviation")}({effectTierText}): {devTotText}
+                {LocalizationManager.GetText("label_position_deviation")}({effectTierText}): {devPosText}
+                {LocalizationManager.GetText("label_proximity_direction")}({effectTierText}): {closestDirText}
                 {LocalizationManager.GetText("label_effect_angle")}: {deltaAngleText}
                 {LocalizationManager.GetText("label_healing_requirement")}: {lifeSaltText}
                 {LocalizationManager.GetText("label_swamp_length")}: {swampDisText}
@@ -66,27 +82,20 @@ namespace AlchAssV3
         /// </summary>
         public static string CalculateLadle()
         {
+            var effectTierText = Variable.DoColliderAttachment ? "T1" : "T2~3";
+            var effectClosestIndex = Variable.DoColliderAttachment ? 2 : 3;
             string devTotText = LocalizationManager.GetText("label_unavailable");
             string devPosText = LocalizationManager.GetText("label_unavailable");
             string closestDirText = LocalizationManager.GetText("label_unavailable");
             string deltaAngleText = LocalizationManager.GetText("label_unavailable");
             string lifeSaltText = LocalizationManager.GetText("label_unavailable");
 
-            if (!float.IsNaN(Variable.ClosestPositions[2].x))
+            if (Variable.TargetEffect != null)
             {
                 Vector2 targetPos = Variable.TargetEffect.transform.localPosition;
                 var targetRot = Variable.TargetEffect.transform.localEulerAngles.z;
-                var devPos = Vector2.Distance(targetPos, Variable.ClosestPositions[2]) * 1800f;
-                var devRot = Mathf.Abs(Mathf.DeltaAngle(Managers.RecipeMap.indicatorRotation.Value, targetRot)) / 3f * 25f;
-                var devTot = devPos + devRot;
-
-                var lvlPos = devPos <= 100f ? 3 : devPos <= 600f ? 2 : devPos <= 2754f ? 1 : 0;
-                var lvlTot = devTot <= 100f ? 3 : devTot <= 600f ? 2 : devPos <= 2754f ? 1 : 0;
-                var closestDir = Vector2.SignedAngle(Vector2.right, Variable.ClosestPositions[2] - targetPos);
-
-                devPosText = $"<color=red>L{lvlPos}</color> {devPos}%";
-                devTotText = $"<color=red>L{lvlTot}</color> {devTot}%";
-                closestDirText = $"{closestDir}°";
+                TryFormatEffectDeviation(Variable.EffectClosestPositions[effectClosestIndex], targetPos, targetRot,
+                    out devPosText, out devTotText, out closestDirText);
             }
 
             if (!double.IsNaN(Variable.LineDirections[1]) && !double.IsNaN(Variable.LineDirections[2]))
@@ -97,9 +106,9 @@ namespace AlchAssV3
             if (!double.IsNaN(Variable.DangerDistanceLadle))
                 lifeSaltText = Function.FormatLifeSalt(Variable.DangerDistanceLadle);
             return $"""
-                {LocalizationManager.GetText("label_total_deviation")}: {devTotText}
-                {LocalizationManager.GetText("label_position_deviation")}: {devPosText}
-                {LocalizationManager.GetText("label_proximity_direction")}: {closestDirText}
+                {LocalizationManager.GetText("label_total_deviation")}({effectTierText}): {devTotText}
+                {LocalizationManager.GetText("label_position_deviation")}({effectTierText}): {devPosText}
+                {LocalizationManager.GetText("label_proximity_direction")}({effectTierText}): {closestDirText}
                 {LocalizationManager.GetText("label_effect_angle")}: {deltaAngleText}
                 {LocalizationManager.GetText("label_healing_requirement")}: {lifeSaltText}
                 """;
@@ -193,19 +202,18 @@ namespace AlchAssV3
 
             Vector2 targetPos = Variable.TargetEffect.transform.localPosition;
             var targetRot = Variable.TargetEffect.transform.localEulerAngles.z;
-            var indPos = GetIndicatorMapCheckPosition();
             var indRot = Managers.RecipeMap.indicatorRotation.Value;
+            var effectTierText = Variable.DoColliderAttachment ? "T1" : "T2~3";
+            var indPos = Variable.DoColliderAttachment ? GetIndicatorColliderPosition() : GetIndicatorLogicPosition();
 
-            var devPos = Vector2.Distance(targetPos, indPos) * 1800f;
             var devRot = Mathf.Abs(Mathf.DeltaAngle(indRot, targetRot)) / 3f * 25f;
-            var devTot = devPos + devRot;
+            TryFormatEffectDeviation(indPos, targetPos, targetRot,
+                out var devPosText, out var devTotText, out _);
 
-            var lvlPos = devPos <= 100f ? 3 : devPos <= 600f ? 2 : devPos <= 2754f ? 1 : 0;
             var lvlRot = devRot <= 100f ? 3 : devRot <= 600f ? 2 : 1;
-            var lvlTot = devTot <= 100f ? 3 : devTot <= 600f ? 2 : devPos <= 2754f ? 1 : 0;
             return $"""
-                {LocalizationManager.GetText("label_total_deviation")}: <color=red>L{lvlTot}</color> {devTot}%
-                {LocalizationManager.GetText("label_position_deviation")}: <color=red>L{lvlPos}</color> {devPos}%
+                {LocalizationManager.GetText("label_total_deviation")}({effectTierText}): {devTotText}
+                {LocalizationManager.GetText("label_position_deviation")}({effectTierText}): {devPosText}
                 {LocalizationManager.GetText("label_rotation_deviation")}: <color=red>L{lvlRot}</color> {devRot}%
                 """;
         }
@@ -617,9 +625,11 @@ namespace AlchAssV3
             }
 
             Variable.ClosestPositions = [new Vector2(float.NaN, float.NaN), new Vector2(float.NaN, float.NaN), new Vector2(float.NaN, float.NaN), new Vector2(float.NaN, float.NaN)];
+            Variable.EffectClosestPositions = [new Vector2(float.NaN, float.NaN), new Vector2(float.NaN, float.NaN), new Vector2(float.NaN, float.NaN), new Vector2(float.NaN, float.NaN)];
             Variable.DefeatPositions = [new Vector2(float.NaN, float.NaN), new Vector2(float.NaN, float.NaN), new Vector2(float.NaN, float.NaN)];
             Variable.DangerPositions = [[], [], []];
             Variable.IntersectionPositions = [[], [], [], []];
+            Variable.EffectIntersectionPositions = [[], [], [], []];
             Variable.DangerDistancePath = double.NaN;
             Variable.DangerDistanceLadle = double.NaN;
             Variable.DangerDistanceVortex = double.NaN;
@@ -670,28 +680,38 @@ namespace AlchAssV3
             var dangerVortexEn = Variable.DoVortexDangerPoint && vortexIn;
 
             var lenPath = Variable.PathPhysical.Count() - 1;
-            var effectCheckPath = Variable.DoColliderAttachment ? Variable.PathCollision : Variable.PathPhysical;
-            var effectLadleStartPos = Variable.DoColliderAttachment ? ladleColliderPos : ladleLogicPos;
-            var effectLadleEndPos = Variable.DoColliderAttachment ? ladleColliderTargetPos : ladleLogicTargetPos;
+            var effectTier1Path = Variable.PathCollision;
+            var effectTier23Path = Variable.PathPhysical;
             if (lenPath > 0)
             {
                 if (closeEPathEn || closeVPathEn)
                 {
-                    var closeEPathMin = double.MaxValue;
+                    var closeEPathTier1Min = double.MaxValue;
+                    var closeEPathTier23Min = double.MaxValue;
                     var closeVPathMin = double.MaxValue;
 
                     for (var i = 0; i < lenPath; i++)
                     {
                         if (closeEPathEn)
                         {
-                            Vector2 effectP0 = effectCheckPath[i].Item1;
-                            Vector2 effectP1 = effectCheckPath[i + 1].Item1;
-                            var effectIsTp = effectCheckPath[i + 1].Item2;
-                            Geometry.SqrDisToPoint(effectP0, effectP1, effectPos, effectIsTp, out var closeEPathDis, out var closeEPathPos);
-                            if (closeEPathDis < closeEPathMin)
+                            Vector2 effectTier1P0 = effectTier1Path[i].Item1;
+                            Vector2 effectTier1P1 = effectTier1Path[i + 1].Item1;
+                            var effectTier1IsTp = effectTier1Path[i + 1].Item2;
+                            Geometry.SqrDisToPoint(effectTier1P0, effectTier1P1, effectPos, effectTier1IsTp, out var closeEPathTier1Dis, out var closeEPathTier1Pos);
+                            if (closeEPathTier1Dis < closeEPathTier1Min)
                             {
-                                closeEPathMin = closeEPathDis;
-                                Variable.ClosestPositions[0] = closeEPathPos;
+                                closeEPathTier1Min = closeEPathTier1Dis;
+                                Variable.EffectClosestPositions[0] = closeEPathTier1Pos;
+                            }
+
+                            Vector2 effectTier23P0 = effectTier23Path[i].Item1;
+                            Vector2 effectTier23P1 = effectTier23Path[i + 1].Item1;
+                            var effectTier23IsTp = effectTier23Path[i + 1].Item2;
+                            Geometry.SqrDisToPoint(effectTier23P0, effectTier23P1, effectPos, effectTier23IsTp, out var closeEPathTier23Dis, out var closeEPathTier23Pos);
+                            if (closeEPathTier23Dis < closeEPathTier23Min)
+                            {
+                                closeEPathTier23Min = closeEPathTier23Dis;
+                                Variable.EffectClosestPositions[1] = closeEPathTier23Pos;
                             }
                         }
 
@@ -715,27 +735,43 @@ namespace AlchAssV3
                     for (var i = 0; i < lenPath; i += 100) // 批量预处理和排除。
                     {
                         var lt = Math.Min(lenPath, i + 100);
-                        GetPathAABB(effectCheckPath, i, lt, out var effectMinx, out var effectMiny, out var effectMaxx, out var effectMaxy);
+                        GetPathAABB(effectTier1Path, i, lt, out var effectTier1Minx, out var effectTier1Miny, out var effectTier1Maxx, out var effectTier1Maxy);
+                        GetPathAABB(effectTier23Path, i, lt, out var effectTier23Minx, out var effectTier23Miny, out var effectTier23Maxx, out var effectTier23Maxy);
                         GetPathAABB(Variable.PathCollision, i, lt, out var vortexMinx, out var vortexMiny, out var vortexMaxx, out var vortexMaxy);
 
-                        var effectPathEnC = effectPathEn && Geometry.RangeAABB(
-                            effectMinx, effectMiny,
-                            effectMaxx, effectMaxy,
+                        var effectTier1PathEnC = effectPathEn && Geometry.RangeAABB(
+                            effectTier1Minx, effectTier1Miny,
+                            effectTier1Maxx, effectTier1Maxy,
+                            effectPos, 1.53);
+                        var effectTier23PathEnC = effectPathEn && Geometry.RangeAABB(
+                            effectTier23Minx, effectTier23Miny,
+                            effectTier23Maxx, effectTier23Maxy,
                             effectPos, 1.53);
                         var vortexPathEnC = vortexPathEn && Geometry.RangeAABB(
                             vortexMinx, vortexMiny,
                             vortexMaxx, vortexMaxy,
                             vortexPos, vortexRad);
 
-                        if (effectPathEnC)
+                        if (effectTier1PathEnC)
                         {
                             for (var j = i; j < lt; j++)
                             {
-                                Vector2 effectP0 = effectCheckPath[j].Item1;
-                                Vector2 effectP1 = effectCheckPath[j + 1].Item1;
-                                var effectIsTp = effectCheckPath[j + 1].Item2;
-                                Geometry.TargetRange(effectP0, effectP1, effectPos, effectIsTp, out var effectIntersections);
-                                Variable.IntersectionPositions[0].AddRange(effectIntersections);
+                                Vector2 effectP0 = effectTier1Path[j].Item1;
+                                Vector2 effectP1 = effectTier1Path[j + 1].Item1;
+                                var effectIsTp = effectTier1Path[j + 1].Item2;
+                                Geometry.TargetRange(effectP0, effectP1, effectPos, effectIsTp, 0, 1, out var effectIntersections);
+                                Variable.EffectIntersectionPositions[0].AddRange(effectIntersections);
+                            }
+                        }
+                        if (effectTier23PathEnC)
+                        {
+                            for (var j = i; j < lt; j++)
+                            {
+                                Vector2 effectP0 = effectTier23Path[j].Item1;
+                                Vector2 effectP1 = effectTier23Path[j + 1].Item1;
+                                var effectIsTp = effectTier23Path[j + 1].Item2;
+                                Geometry.TargetRange(effectP0, effectP1, effectPos, effectIsTp, 1, 3, out var effectIntersections);
+                                Variable.EffectIntersectionPositions[1].AddRange(effectIntersections);
                             }
                         }
                         if (vortexPathEnC)
@@ -782,11 +818,17 @@ namespace AlchAssV3
             }
 
             if (closeELadleEn)
-                Geometry.SqrDisToPoint(effectLadleStartPos, effectLadleEndPos, effectPos, false, out _, out Variable.ClosestPositions[2]);
+            {
+                Geometry.SqrDisToPoint(ladleColliderPos, ladleColliderTargetPos, effectPos, false, out _, out Variable.EffectClosestPositions[2]);
+                Geometry.SqrDisToPoint(ladleLogicPos, ladleLogicTargetPos, effectPos, false, out _, out Variable.EffectClosestPositions[3]);
+            }
             if (closeVLadleEn)
                 Geometry.SqrDisToPoint(ladleColliderPos, ladleColliderTargetPos, vortexPos, false, out _, out Variable.ClosestPositions[3]);
             if (effectLadleEn)
-                Geometry.TargetRange(effectLadleStartPos, effectLadleEndPos, effectPos, false, out Variable.IntersectionPositions[1]);
+            {
+                Geometry.TargetRange(ladleColliderPos, ladleColliderTargetPos, effectPos, false, 0, 1, out Variable.EffectIntersectionPositions[2]);
+                Geometry.TargetRange(ladleLogicPos, ladleLogicTargetPos, effectPos, false, 1, 3, out Variable.EffectIntersectionPositions[3]);
+            }
             if (vortexLadleEn)
                 Geometry.VortexRange(ladleColliderPos, ladleColliderTargetPos, vortexPos, vortexRad, false, out Variable.IntersectionPositions[3]);
             if (dangerLadleEn)

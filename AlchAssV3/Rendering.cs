@@ -184,12 +184,18 @@ namespace AlchAssV3
             var effectAnchor = Variable.DoColliderAttachment ? colliderAnchor : logicAnchor;
             Vector2[] closestSourceAnchors = [effectAnchor, colliderAnchor, effectAnchor, colliderAnchor];
             Vector2[] intersectionSourceAnchors = [effectAnchor, effectAnchor, colliderAnchor, colliderAnchor];
+            var renderedClosestPositions = (Vector2[])Variable.ClosestPositions.Clone();
+            var renderedIntersectionPositions = Variable.IntersectionPositions.ToArray();
+            renderedClosestPositions[0] = Variable.EffectClosestPositions[Variable.DoColliderAttachment ? 0 : 1];
+            renderedClosestPositions[2] = Variable.EffectClosestPositions[Variable.DoColliderAttachment ? 2 : 3];
+            renderedIntersectionPositions[0] = Variable.EffectIntersectionPositions[Variable.DoColliderAttachment ? 0 : 1];
+            renderedIntersectionPositions[1] = Variable.EffectIntersectionPositions[Variable.DoColliderAttachment ? 2 : 3];
 
             for (var i = 0; i < 4; i++)
             {
-                if (closestEnables[i] && !float.IsNaN(Variable.ClosestPositions[i].x))
+                if (closestEnables[i] && !float.IsNaN(renderedClosestPositions[i].x))
                 {
-                    var posDev = RenderMapPoint(mapTrans, Variable.ClosestPositions[i], closestSourceAnchors[i]);
+                    var posDev = RenderMapPoint(mapTrans, renderedClosestPositions[i], closestSourceAnchors[i]);
                     if (Variable.ClosestPoints[i] == null)
                         InitSpriteRenderer(ref Variable.ClosestPoints[i]);
                     UpdateSpriteRenderer(Variable.SquareSprite, Variable.ColorClosest.Value, ref Variable.ClosestPoints[i], posDev, (float)Variable.NodeSize.Value, 4);
@@ -200,11 +206,11 @@ namespace AlchAssV3
 
             for (var i = 0; i < 4; i++)
             {
-                if (intersectionEnables[i] && Variable.IntersectionPositions[i].Count > 0)
+                if (intersectionEnables[i] && renderedIntersectionPositions[i].Count > 0)
                 {
-                    for (var j = 0; j < Variable.IntersectionPositions[i].Count; j++)
+                    for (var j = 0; j < renderedIntersectionPositions[i].Count; j++)
                     {
-                        var posDev = RenderMapPoint(mapTrans, Variable.IntersectionPositions[i][j], intersectionSourceAnchors[i]);
+                        var posDev = RenderMapPoint(mapTrans, renderedIntersectionPositions[i][j], intersectionSourceAnchors[i]);
 
                         if (Variable.IntersectionPoints[i].Count <= j)
                         {
@@ -221,7 +227,7 @@ namespace AlchAssV3
                         }
                     }
 
-                    while (Variable.IntersectionPoints[i].Count > Variable.IntersectionPositions[i].Count)
+                    while (Variable.IntersectionPoints[i].Count > renderedIntersectionPositions[i].Count)
                     {
                         Object.Destroy(Variable.IntersectionPoints[i].Last().gameObject);
                         Variable.IntersectionPoints[i].RemoveAt(Variable.IntersectionPoints[i].Count - 1);
@@ -465,12 +471,26 @@ namespace AlchAssV3
                 var posDev = mapTrans.TransformPoint(effectPos);
                 double[] rads = [1.53, 1.0 / 3.0 - devRot / 216.0, 1.0 / 18.0 - devRot / 216.0];
 
-                Calculation.InitRange(rads[0], effectPos.x, effectPos.y, out var pointsOut);
-                if (Variable.EffectRangeOuter == null)
-                    InitLineRenderer(ref Variable.EffectRangeOuter);
-                UpdateLineRenderer(Variable.SolidMaterial, Variable.ColorRange.Value, ref Variable.EffectRangeOuter, pointsOut, true, 1);
+                if (Variable.DoColliderAttachment)
+                {
+                    Calculation.InitRange(rads[0], effectPos.x, effectPos.y, out var pointsOut);
+                    if (Variable.EffectRangeOuter == null)
+                        InitLineRenderer(ref Variable.EffectRangeOuter);
+                    UpdateLineRenderer(Variable.SolidMaterial, Variable.ColorRange.Value, ref Variable.EffectRangeOuter, pointsOut, true, 1);
+                }
+                else if (Variable.EffectRangeOuter != null)
+                    Object.Destroy(Variable.EffectRangeOuter.gameObject);
 
-                if (rads[1] > Variable.LineWidth.Value)
+                if (Variable.DoColliderAttachment)
+                {
+                    if (Variable.EffectRangeMiddle != null)
+                        Object.Destroy(Variable.EffectRangeMiddle.gameObject);
+                    if (Variable.EffectDiskMiddle != null)
+                        Object.Destroy(Variable.EffectDiskMiddle.gameObject);
+                    if (Variable.EffectDiskInner != null)
+                        Object.Destroy(Variable.EffectDiskInner.gameObject);
+                }
+                else if (rads[1] > Variable.LineWidth.Value)
                 {
                     if (Variable.EffectDiskMiddle != null)
                         Object.Destroy(Variable.EffectDiskMiddle.gameObject);
@@ -496,7 +516,7 @@ namespace AlchAssV3
                         Object.Destroy(Variable.EffectDiskMiddle.gameObject);
                 }
 
-                if (rads[2] > 0)
+                if (!Variable.DoColliderAttachment && rads[2] > 0)
                 {
                     var scale = rads[2] / Variable.LineWidth.Value;
                     if (Variable.EffectDiskInner == null)
